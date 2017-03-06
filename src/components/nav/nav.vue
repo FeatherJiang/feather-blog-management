@@ -24,11 +24,6 @@
             routerLink: '/admin/article',
             fontClass: 'fa-file',
             hintText: 'article'
-          },
-          {
-            routerLink: '/admin/setting',
-            fontClass: 'fa-gear',
-            hintText: 'setting'
           }
         ]
       }

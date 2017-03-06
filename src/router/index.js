@@ -27,10 +27,6 @@ export default new Router({
         {
           path: 'article',
           component: article
-        },
-        {
-          path: 'setting',
-          component: login
         }
       ]
     }
