@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import login from 'components/login/login'
 import admin from 'components/admin/admin'
 import write from 'components/write/write'
+import article from 'components/article/article'
 
 Vue.use(Router)
 
@@ -25,7 +26,7 @@ export default new Router({
         },
         {
           path: 'article',
-          component: login
+          component: article
         },
         {
           path: 'setting',
