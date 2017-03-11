@@ -1,5 +1,6 @@
 <template>
   <div class="setpanel">
+    <span class="close" @click="hidePanel"><i class="fa fa-close"></i></span>
     <div class="title-wrapper">
       <label class="text" for="title">title</label>
       <input type="text" id="title" v-model="title">
@@ -7,7 +8,7 @@
     <div class="tag-wrapper">
       <span class="text">tag</span>
       <div class="tags">
-        <edittag v-for="(tag, index) in tags" :tag="tag" :index="index"></edittag>
+        <edittag v-for="(tag, index) in tags" :tag="tag" :index="index" :key="index"></edittag>
         <div class="add-tag">
           <input type="text" id="tag-text" v-show="!icon" v-model="tagText">
           <span class="add-text" @click="addTag">
@@ -17,7 +18,6 @@
       </div>
     </div>
     <div class="overview-wrapper">
-      <span class="close" @click="hidePanel"><i class="fa fa-close"></i></span>
       <label class="text" for="overview">overview</label>
       <textarea id="overview" v-model="overview"></textarea>
     </div>
@@ -47,12 +47,14 @@
     methods: {
       hidePanel () {
         this.tags = []
-        bus.$emit('hidePanel', false)
+        bus.$emit('hideSetPanel', false)
       },
       addTag () {
         if (this.icon === false) {
-          this.tags.push(this.tagText)
-          this.tagText = ''
+          if (this.tagText !== '') {
+            this.tags.push(this.tagText)
+            this.tagText = ''
+          }
         }
         this.icon = !this.icon
       }

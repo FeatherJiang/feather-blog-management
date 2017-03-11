@@ -10,8 +10,7 @@
   export default {
     props: {
       tag: {
-        type: String,
-        default: 'other'
+        type: String
       },
       index: {
         type: Number

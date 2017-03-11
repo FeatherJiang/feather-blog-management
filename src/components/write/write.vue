@@ -2,14 +2,20 @@
   <div class="write">
     <div class="input-wrapper">
       <textarea id="content" contenteditable="true" v-model="content"></textarea>
+      <button id="insert-img-btn" @click="toggleInsertPanel"><i class="fa fa-picture-o"></i></button>
     </div>
     <div class="markdown-wrapper">
       <markdown :text="content"></markdown>
-      <button id="create-btn" @click="togglePanel">create</button>
+      <button id="create-btn" @click="toggleSetPanel">create</button>
     </div>
     <transition name="pop">
-      <div class="setpanel-wrapper" v-show="panelShow">
-        <setpanel :panelShow="panelShow"></setpanel>
+      <div class="setpanel-wrapper" v-show="setPanelShow">
+        <setpanel :panelShow="setPanelShow"></setpanel>
+      </div>
+    </transition>
+    <transition name="pop">
+      <div class="insertpanel-wrapper" v-show="insertPanelShow">
+        <insertpanel :panelShow="insertPanelShow"></insertpanel>
       </div>
     </transition>
   </div>
@@ -19,27 +25,36 @@
 
   import markdown from 'components/markdown/markdown'
   import setpanel from 'components/setpanel/setpanel'
+  import insertpanel from 'components/insertpanel/insertpanel'
 
   export default {
     data () {
       return {
         content: '',
-        panelShow: false
+        setPanelShow: false,
+        insertPanelShow: false
       }
     },
     methods: {
-      togglePanel () {
-        this.panelShow = !this.panelShow
+      toggleInsertPanel () {
+        this.insertPanelShow = !this.insertPanelShow
+      },
+      toggleSetPanel () {
+        this.setPanelShow = !this.setPanelShow
       }
     },
     created () {
-      bus.$on('hidePanel', (boolean) => {
-        this.panelShow = boolean
+      bus.$on('hideInsertPanel', (boolean) => {
+        this.insertPanelShow = boolean
+      })
+      bus.$on('hideSetPanel', (boolean) => {
+        this.setPanelShow = boolean
       })
     },
     components: {
       markdown: markdown,
-      setpanel: setpanel
+      setpanel: setpanel,
+      insertpanel: insertpanel
     }
   }
 </script>
@@ -50,11 +65,15 @@
     height 100%
     font-size 0
     .input-wrapper
+      position relative
       vertical-align top
       display inline-block
       width 50%
       height 100%
       background #333
+      &:hover
+        #insert-img-btn
+          display block
       #content
         width 100%
         height 100%
@@ -68,6 +87,24 @@
         box-sizing border-box
         &:focus
           outline none
+      #insert-img-btn
+        position absolute
+        display none
+        width 30px
+        height 30px
+        top: 10px
+        right 10px
+        font-size 18px
+        color #4285f4
+        background #f7f7f7
+        border none
+        border-radius 2px
+        box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+        cursor pointer
+        transition all 0.5s ease
+        &:hover
+          color #fff
+          background #4285f4
     .markdown-wrapper
       position relative
       display inline-block
@@ -84,8 +121,8 @@
         display none
         width 60px
         height 30px
-        top: 20px
-        right 20px
+        top: 10px
+        right 10px
         font-size 18px
         color #4285f4
         background #f7f7f7
@@ -97,6 +134,13 @@
         &:hover
           color #fff
           background #4285f4
+    .insertpanel-wrapper
+      position absolute
+      top 0
+      left 0
+      width 100%
+      height 100%
+      background rgba(0,0,0,0.4)
     .setpanel-wrapper
       position absolute
       top 0
@@ -106,10 +150,14 @@
       background rgba(0,0,0,0.4)
     .pop-enter-active, .pop-leave-active
       transition all 0.5s ease
+      .insertpanel
+        transition all 0.5s ease
       .setpanel
         transition all 0.5s ease
     .pop-enter, .pop-leave-active
       opacity 0
+      .insertpanel
+        transform translate(0, -200%)
       .setpanel
         transform translate(0, -200%)
 </style>
