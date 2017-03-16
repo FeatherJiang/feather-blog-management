@@ -1,30 +1,67 @@
 <template>
   <div class="login">
-    <div class="login-panel">
+    <form class="login-panel">
       <a class="logo-wrapper" href="#">
         <img src="../../assets/imgs/feather_white.png" alt="logo" class="logo" width="50" height="50">
       </a>
       <div class="user-wrapper">
         <label for="user-name" class="text">name</label>
-        <input type="text" id="user-name">
+        <input type="text" id="user-name" v-model="user.name">
       </div>
       <div class="pwd-wrapper">
         <label for="user-pwd" class="text">password</label>
-        <input type="password" id="user-pwd">
+        <input type="password" id="user-pwd" v-model="user.password">
       </div>
       <div class="btn-wrapper">
-        <button type="button" id="login-btn">
+        <button type="button" id="login-btn" @click="login">
           <span v-show="true">login</span>
           <div class="loading-wrapper"></div>
         </button>
-        <div class="hint" v-show="true">error</div>
+        <transition name="slip">
+          <div class="hint" v-show="hintShow">error</div>
+        </transition>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 <script>
-  export default {
+  import VueRouter from 'vue-router'
+  var router = new VueRouter()
 
+  const OK = 1
+
+  export default {
+    data () {
+      return {
+        hintShow: false,
+        user: {
+          name: '',
+          password: ''
+        }
+      }
+    },
+    methods: {
+      login () {
+        let Vue = this
+        this.$http.post('/api/login', this.user)
+          .then(function (response) {
+            let res = response.data
+
+            if (res.code === OK) {
+              sessionStorage.setItem('token', res.data.token)
+              router.push('admin')
+            } else {
+              Vue.hintShow = true
+              setTimeout(function () {
+                Vue.hintShow = false
+              }, 2000)
+            }
+          })
+          .catch(function (error) {
+            console.log(error.toString())
+          })
+      }
+    }
   }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
@@ -139,7 +176,7 @@
         .hint
           position absolute
           z-index 1
-          top 0
+          top 30px
           left 50%
           width 80px
           height 20px
@@ -150,5 +187,9 @@
           color #f92452
           background #f7f7f7
           border-radius 0 0 5px 5px
-          box-shadow 0 2px 5px 0 rgba(0,0,0,0)
+          box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+        .slip-enter-active, .slip-leave-active
+          transition all 0.5s
+        .slip-enter, .slip-leave-active
+          transform translate(0,-30px)
 </style>

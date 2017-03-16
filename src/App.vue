@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <transition name="login">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -14,4 +16,12 @@ export default {
   #app
     width 100%
     height 100%
+  .login-enter-active, .login-leave-active
+    transition all 0.5s ease
+  .login-enter
+    position fixed
+    transform translate(0, 100%)
+  .login-leave-active
+    position fixed
+    transform translate(0, -100%)
 </style>

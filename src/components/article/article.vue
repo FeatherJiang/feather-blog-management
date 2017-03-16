@@ -76,7 +76,7 @@
             margin 10px 0 0
       .loading-wrapper
         width 920px
-        margin 10px auto
+        margin 10px auto 20px
         padding 5px 0
         background #fff
         border-radius 2px

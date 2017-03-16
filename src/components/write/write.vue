@@ -10,7 +10,7 @@
     </div>
     <transition name="pop">
       <div class="setpanel-wrapper" v-show="setPanelShow">
-        <setpanel :panelShow="setPanelShow"></setpanel>
+        <setpanel :panelShow="setPanelShow" :article="article"></setpanel>
       </div>
     </transition>
     <transition name="pop">
@@ -22,15 +22,19 @@
 </template>
 <script>
   import {bus} from '../../assets/js/bus.js'
+  import {urlParse} from '../../assets/js/urlParse'
 
   import markdown from 'components/markdown/markdown'
   import setpanel from 'components/setpanel/setpanel'
   import insertpanel from 'components/insertpanel/insertpanel'
 
+  const OK = 1
+
   export default {
     data () {
       return {
         content: '',
+        article: null,
         setPanelShow: false,
         insertPanelShow: false
       }
@@ -44,11 +48,62 @@
       }
     },
     created () {
+      let Vue = this
+      let param = urlParse()
+      if (param.id !== undefined) {
+        this.$http.post('/api/getArticleById', param)
+          .then(function (response) {
+            let res = response.data
+            if (res.code === OK) {
+              Vue.content = res.data.article.content
+              Vue.article = res.data.article
+              console.log(Vue.article)
+            }
+          })
+          .catch(function (error) {
+            console.log(error.toString())
+          })
+      }
       bus.$on('hideInsertPanel', (boolean) => {
         this.insertPanelShow = boolean
       })
       bus.$on('hideSetPanel', (boolean) => {
         this.setPanelShow = boolean
+      })
+      bus.$on('insertImg', (imgLink) => {
+        this.content = this.content + '\n' + `![](${imgLink})`
+      })
+      bus.$on('addArticle', (data) => {
+        let oDate = new Date()
+        let date = oDate.getFullYear() + '-'
+        date += oDate.getMonth() + 1 + '-'
+        date += oDate.getDay()
+
+        let article = {
+          title: data.title,
+          type: data.type,
+          tags: data.tags,
+          overview: data.overview,
+          content: this.content,
+          date: date
+        }
+        let formData = new FormData()
+        formData.append('token', sessionStorage.getItem('token'))
+        formData.append('article', JSON.stringify(article))
+        formData.append('img', data.img.files[0])
+
+        let Vue = this
+        this.$http.post('/api/addArticle', formData)
+          .then(function (response) {
+            let res = response.data
+            if (res.code === OK) {
+              Vue.toggleSetPanel()
+              Vue.content = ''
+            }
+          })
+          .catch(function (error) {
+            console.log(error.toString())
+          })
       })
     },
     components: {
@@ -140,24 +195,22 @@
       left 0
       width 100%
       height 100%
-      background rgba(0,0,0,0.4)
     .setpanel-wrapper
       position absolute
       top 0
       left 0
       width 100%
       height 100%
-      background rgba(0,0,0,0.4)
     .pop-enter-active, .pop-leave-active
       transition all 0.5s ease
-      .insertpanel
+      .insertpanel-inner
         transition all 0.5s ease
-      .setpanel
+      .setpanel-inner
         transition all 0.5s ease
     .pop-enter, .pop-leave-active
       opacity 0
-      .insertpanel
+      .insertpanel-inner
         transform translate(0, -200%)
-      .setpanel
+      .setpanel-inner
         transform translate(0, -200%)
 </style>

@@ -41,7 +41,5 @@
   .switch-leave-active
     position fixed !important
     left 50px
-    width 100%
-    height 100%
     transform translate(0, -100%)
 </style>
