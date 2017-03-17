@@ -51,13 +51,12 @@
       let Vue = this
       let param = urlParse()
       if (param.id !== undefined) {
-        this.$http.post('/api/getArticleById', param)
+        this.$http.post('api/getArticleById', param)
           .then(function (response) {
             let res = response.data
             if (res.code === OK) {
               Vue.content = res.data.article.content
               Vue.article = res.data.article
-              console.log(Vue.article)
             }
           })
           .catch(function (error) {

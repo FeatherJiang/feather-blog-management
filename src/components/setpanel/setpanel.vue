@@ -96,6 +96,15 @@
         }
         this.icon = !this.icon
       },
+      getArticle () {
+        if (this.article.id !== undefined) {
+          this.title = this.article.title
+          this.type = this.article.type
+          this.tags = this.article.tags.split(',')
+          this.overview = this.article.overview
+          this.$refs.img.setAttribute('src', this.article.img)
+        }
+      },
       addArticle () {
         let data = {
           title: this.title,
@@ -107,16 +116,10 @@
         bus.$emit('addArticle', data)
       }
     },
+    watch: {
+      panelShow: 'getArticle'
+    },
     created () {
-      console.log(this.article)
-      if (this.article.id !== undefined) {
-        this.title = this.article.title
-        this.type = this.article.type
-        this.tags = this.article.tags.splice(',')
-        this.overview = this.article.overview
-        this.$refs.img.setAttribute('src', this.article.img)
-      }
-
       bus.$on('deltag', (index) => {
         this.tags.splice(index, 1)
       })
