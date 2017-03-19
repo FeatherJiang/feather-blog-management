@@ -104,6 +104,33 @@
             console.log(error.toString())
           })
       })
+      bus.$on('updataArticle', (data) => {
+        let article = {
+          title: data.title,
+          type: data.type,
+          tags: data.tags,
+          overview: data.overview,
+          content: this.content,
+          id: data.id
+        }
+        let formData = new FormData()
+        formData.append('token', sessionStorage.getItem('token'))
+        formData.append('article', JSON.stringify(article))
+        formData.append('img', data.img)
+
+        let Vue = this
+        this.$http.post('/api/updateArticle', formData)
+          .then(function (response) {
+            let res = response.data
+            if (res.code === OK) {
+              Vue.toggleSetPanel()
+              Vue.content = ''
+            }
+          })
+          .catch(function (error) {
+            console.log(error.toString())
+          })
+      })
     },
     components: {
       markdown: markdown,

@@ -60,7 +60,7 @@
       return {
         title: '',
         tags: [],
-        type: '',
+        type: 1,
         overview: '',
         tagText: '',
         icon: true
@@ -69,7 +69,10 @@
     methods: {
       hidePanel () {
         this.$refs.img.setAttribute('src', '/images/default.png')
+        this.title = ''
         this.tags = []
+        this.type = 1
+        this.overview = ''
         this.$refs.setForm.reset()
         bus.$emit('hideSetPanel', false)
       },
@@ -97,10 +100,16 @@
         this.icon = !this.icon
       },
       getArticle () {
-        if (this.article.id !== undefined) {
+        this.$refs.img.setAttribute('src', '/images/default.png')
+        this.title = ''
+        this.tags = []
+        this.type = 1
+        this.overview = ''
+        this.$refs.setForm.reset()
+        if (this.article !== null) {
           this.title = this.article.title
           this.type = this.article.type
-          this.tags = this.article.tags.split(',')
+          this.tags = this.article.tags
           this.overview = this.article.overview
           this.$refs.img.setAttribute('src', this.article.img)
         }
@@ -113,7 +122,15 @@
           overview: this.overview,
           img: this.$refs.fileImg
         }
-        bus.$emit('addArticle', data)
+        if (this.article === null) {
+          bus.$emit('addArticle', data)
+        } else {
+          data.id = this.article.id
+          if (this.$refs.fileImg.value === '') {
+            data.img = this.article.img
+          }
+          bus.$emit('updataArticle', data)
+        }
       }
     },
     watch: {

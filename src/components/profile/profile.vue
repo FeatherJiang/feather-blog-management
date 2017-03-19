@@ -4,16 +4,16 @@
       <img src="../../assets/imgs/deep_space.png" width="230" height="130">
     </div>
     <div class="overview">
-      <h1 class="title">this is a test</h1>
+      <h1 class="title">{{article.title}}</h1>
       <div class="tag-wrapper">
-        <tag></tag>
+        <tag v-for="tag in article.tags" :tag="tag" key="key"></tag>
       </div>
-      <div class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias aut ducimus, ex facilis, fuga laborum libero modi necessitatibus nesciunt nisi porro quasi, quod reiciendis sint veritatis vero voluptatibus. Distinctio, ex.</div>
+      <div class="text">{{article.overview}}</div>
       <div class="meta">
-        <span class="browse"><i class="fa fa-eye"></i>123</span>
-        <span class="comment"><i class="fa fa-comments"></i>123</span>
-        <span class="like"><i class="fa fa-star"></i>213</span>
-        <span class="time"><i class="fa fa-calendar"></i>2016-5-3</span>
+        <span class="browse"><i class="fa fa-eye"></i>{{article.view}}</span>
+        <span class="comment"><i class="fa fa-comments"></i>{{article.comment}}</span>
+        <span class="like"><i class="fa fa-star"></i>{{article.like}}</span>
+        <span class="time"><i class="fa fa-calendar"></i>{{article.date}}</span>
       </div>
     </div>
   </div>
@@ -69,6 +69,8 @@
         width 100%
         height 20px
         padding 5px 0
+        .tag
+          margin-right 10px
       .text
         height 65px
         line-height 18px

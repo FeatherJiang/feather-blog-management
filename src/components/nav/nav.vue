@@ -24,6 +24,11 @@
             routerLink: '/admin/article',
             fontClass: 'fa-file',
             hintText: 'article'
+          },
+          {
+            routerLink: '/admin/banner',
+            fontClass: 'fa-star',
+            hintText: 'banner'
           }
         ]
       }

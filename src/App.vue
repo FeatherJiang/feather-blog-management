@@ -16,6 +16,8 @@ export default {
   #app
     width 100%
     height 100%
+    background url("assets/imgs/e.jpg") no-repeat
+    background-size 100% 100%
   .login-enter-active, .login-leave-active
     transition all 0.5s ease
   .login-enter
