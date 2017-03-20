@@ -21,6 +21,7 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   import {bus} from '../../assets/js/bus.js'
   import {urlParse} from '../../assets/js/urlParse'
 
@@ -29,6 +30,8 @@
   import insertpanel from 'components/insertpanel/insertpanel'
 
   const OK = 1
+  var CancelToken = axios.CancelToken
+  var source = CancelToken.source()
 
   export default {
     data () {
@@ -103,6 +106,7 @@
           .catch(function (error) {
             console.log(error.toString())
           })
+        source.cancel()
       })
       bus.$on('updataArticle', (data) => {
         let article = {
