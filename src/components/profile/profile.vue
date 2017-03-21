@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <div class="img-wrapper">
-      <img src="../../assets/imgs/deep_space.png" width="230" height="130">
+      <img :src="article.img" width="230" height="130">
     </div>
     <div class="overview">
       <h1 class="title">{{article.title}}</h1>

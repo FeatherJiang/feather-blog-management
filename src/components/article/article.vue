@@ -49,7 +49,6 @@
                 Vue.page += 1
               } else {
                 Vue.text = 'no more'
-                Vue.text = 'no more'
               }
               Vue.showMore = true
             }
