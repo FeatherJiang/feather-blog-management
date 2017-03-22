@@ -10,7 +10,7 @@
       </div>
       <div class="pwd-wrapper">
         <label for="user-pwd" class="text">password</label>
-        <input type="password" id="user-pwd" v-model="user.password">
+        <input type="password" id="user-pwd" v-model="user.password" @keyup.enter="login">
       </div>
       <div class="btn-wrapper">
         <button type="button" id="login-btn" @click="login">
@@ -25,9 +25,6 @@
   </div>
 </template>
 <script>
-  import VueRouter from 'vue-router'
-  var router = new VueRouter()
-
   const OK = 1
 
   export default {
@@ -49,7 +46,7 @@
 
             if (res.code === OK) {
               sessionStorage.setItem('token', res.data.token)
-              router.push('admin')
+              Vue.$router.push('admin')
             } else {
               Vue.hintShow = true
               setTimeout(function () {

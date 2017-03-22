@@ -22,8 +22,6 @@
 <script>
   import profile from 'components/profile/profile'
   import loading from 'components/loading/loading'
-  import VueRouter from 'vue-router'
-  var router = new VueRouter()
 
   const OK = 1
 
@@ -58,8 +56,8 @@
           })
       },
       modifyArticle (article) {
-        router.push({path: '/admin/write', query: {id: article.id}})
-        router.push({path: '/admin/write', query: {id: article.id}})
+        this.$router.push({path: '/admin/write', query: {id: article.id}})
+        this.$router.push({path: '/admin/write', query: {id: article.id}})
       },
       deleteArticle (index) {
         let Vue = this
