@@ -58,7 +58,7 @@
         let oDate = new Date()
         let date = oDate.getFullYear() + '-'
         date += oDate.getMonth() + 1 + '-'
-        date += oDate.getDay()
+        date += oDate.getDate()
 
         let article = {
           title: data.title,
