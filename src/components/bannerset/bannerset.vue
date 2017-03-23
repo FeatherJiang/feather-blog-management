@@ -11,7 +11,12 @@
       <label class="text" for="link">link</label>
       <input type="text" id="link" v-model="link">
     </div>
-    <button id="confirm" type="button" @click="updateBanner">confirm</button>
+    <div class="btn-wrapper">
+      <button id="confirm" type="button" @click="updateBanner">confirm</button>
+      <transition name="slip">
+        <div class="hint" v-show="hintShow">{{text}}</div>
+      </transition>
+    </div>
   </div>
 </template>
 <script>
@@ -25,7 +30,9 @@
     },
     data () {
       return {
-        link: this.banner.link
+        link: this.banner.link,
+        hintShow: false,
+        text: 'error'
       }
     },
     methods: {
@@ -44,6 +51,7 @@
         }
       },
       updateBanner () {
+        let Vue = this
         let formData = new FormData()
         if (this.$refs.fileImg.value !== '') {
           formData.append('img', this.$refs.fileImg.files[0])
@@ -59,7 +67,19 @@
           .then(function (response) {
             let res = response.data
             if (res.code === OK) {
+              Vue.text = 'success'
+              Vue.hintShow = true
 
+              setTimeout(function () {
+                Vue.hintShow = false
+              }, 2000)
+            } else {
+              Vue.text = 'error'
+              Vue.hintShow = true
+
+              setTimeout(function () {
+                Vue.hintShow = false
+              }, 2000)
             }
           })
           .catch(function (error) {
@@ -142,19 +162,48 @@
           border 2px solid #4285f4
           border-left none
           outline none
-    #confirm
-      display block
-      width 100px
+    .btn-wrapper
+      position relative
+      margin 30px 0
       height 30px
-      margin 0 auto
-      font-size 20px
-      color #4285f4
-      background #f7f7f7
-      border none
-      border-radius 2px
-      box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
-      transition all 0.5s ease
-      &:hover
-        color #fff
-        background #4285f4
+      text-align center
+      #confirm
+        position absolute
+        z-index 2
+        top 0
+        left 50%
+        width 100px
+        height 30px
+        margin 0 0 0 -50px
+        text-align center
+        line-height 30px
+        font-size 18px
+        color #4285f4
+        background #f7f7f7
+        border none
+        border-radius 5px
+        box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+        transition all 0.5s ease
+        &:hover
+          color #fff
+          background #4285f4
+      .hint
+        position absolute
+        z-index 1
+        top 30px
+        left 50%
+        width 80px
+        height 20px
+        margin 0 0 0 -40px
+        text-align center
+        line-height 20px
+        font-size 16px
+        color #f92452
+        background #f7f7f7
+        border-radius 0 0 5px 5px
+        box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+      .slip-enter-active, .slip-leave-active
+        transition all 0.5s
+      .slip-enter, .slip-leave-active
+        transform translate(0,-30px)
 </style>
