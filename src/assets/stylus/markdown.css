@@ -385,8 +385,12 @@
   margin-bottom: 0;
 }
 
-.markdown li {
+.markdown ul > li {
   list-style: disc;
+}
+
+.markdown ol > li {
+  list-style: decimal;
 }
 
 .markdown li>p {
