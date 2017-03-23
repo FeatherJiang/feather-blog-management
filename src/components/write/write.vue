@@ -10,19 +10,17 @@
     </div>
     <transition name="pop">
       <div class="setpanel-wrapper" v-show="setPanelShow">
-        <setpanel :panelShow="setPanelShow" :article="article"></setpanel>
+        <setpanel @hideSetPanel="hideSetPanel" @addArticle="addArticle" @updataArticle="updataArticle" :panelShow="setPanelShow" :article="article"></setpanel>
       </div>
     </transition>
     <transition name="pop">
       <div class="insertpanel-wrapper" v-show="insertPanelShow">
-        <insertpanel :panelShow="insertPanelShow"></insertpanel>
+        <insertpanel @hideInsertPanel="hideInsertPanel" @insertImg="insertImg" :panelShow="insertPanelShow"></insertpanel>
       </div>
     </transition>
   </div>
 </template>
 <script>
-  import axios from 'axios'
-  import {bus} from '../../assets/js/bus.js'
   import {urlParse} from '../../assets/js/urlParse'
 
   import markdown from 'components/markdown/markdown'
@@ -30,8 +28,6 @@
   import insertpanel from 'components/insertpanel/insertpanel'
 
   const OK = 1
-  var CancelToken = axios.CancelToken
-  var source = CancelToken.source()
 
   export default {
     data () {
@@ -48,34 +44,17 @@
       },
       toggleSetPanel () {
         this.setPanelShow = !this.setPanelShow
-      }
-    },
-    created () {
-      let Vue = this
-      let param = urlParse()
-      if (param.id !== undefined) {
-        this.$http.post('api/getArticleById', param)
-          .then(function (response) {
-            let res = response.data
-            if (res.code === OK) {
-              Vue.content = res.data.article.content
-              Vue.article = res.data.article
-            }
-          })
-          .catch(function (error) {
-            console.log(error.toString())
-          })
-      }
-      bus.$on('hideInsertPanel', (boolean) => {
+      },
+      hideInsertPanel (boolean) {
         this.insertPanelShow = boolean
-      })
-      bus.$on('hideSetPanel', (boolean) => {
+      },
+      hideSetPanel (boolean) {
         this.setPanelShow = boolean
-      })
-      bus.$on('insertImg', (imgLink) => {
+      },
+      insertImg (imgLink) {
         this.content = this.content + '\n' + `![](${imgLink})`
-      })
-      bus.$on('addArticle', (data) => {
+      },
+      addArticle (data) {
         let oDate = new Date()
         let date = oDate.getFullYear() + '-'
         date += oDate.getMonth() + 1 + '-'
@@ -106,9 +85,8 @@
           .catch(function (error) {
             console.log(error.toString())
           })
-        source.cancel()
-      })
-      bus.$on('updataArticle', (data) => {
+      },
+      updataArticle (data) {
         let article = {
           title: data.title,
           type: data.type,
@@ -134,7 +112,24 @@
           .catch(function (error) {
             console.log(error.toString())
           })
-      })
+      }
+    },
+    created () {
+      let Vue = this
+      let param = urlParse()
+      if (param.id !== undefined) {
+        this.$http.post('api/getArticleById', param)
+          .then(function (response) {
+            let res = response.data
+            if (res.code === OK) {
+              Vue.content = res.data.article.content
+              Vue.article = res.data.article
+            }
+          })
+          .catch(function (error) {
+            console.log(error.toString())
+          })
+      }
     },
     components: {
       markdown: markdown,

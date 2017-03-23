@@ -24,7 +24,7 @@
         <div class="tag-wrapper">
           <span class="text">tag</span>
           <div class="tags">
-            <edittag v-for="(tag, index) in tags" :tag="tag" :index="index" :key="index"></edittag>
+            <edittag v-for="(tag, index) in tags" v-on:delTag="delTag" :tag="tag" :index="index" :key="index"></edittag>
             <div class="add-tag">
               <input type="text" id="tag-text" v-show="!icon" v-model="tagText">
               <span class="add-text" @click="addTag">
@@ -43,8 +43,6 @@
   </div>
 </template>
 <script>
-  import {bus} from '../../assets/js/bus.js'
-
   import edittag from 'components/edittag/edittag'
 
   export default {
@@ -74,7 +72,7 @@
         this.type = 1
         this.overview = ''
         this.$refs.setForm.reset()
-        bus.$emit('hideSetPanel', false)
+        this.$emit('hideSetPanel', false)
       },
       addImg () {
         let resultFile = this.$refs.fileImg.files[0]
@@ -98,6 +96,9 @@
           }
         }
         this.icon = !this.icon
+      },
+      delTag (index) {
+        this.tags.splice(index, 1)
       },
       getArticle () {
         this.$refs.img.setAttribute('src', '/images/default.png')
@@ -123,23 +124,19 @@
           img: this.$refs.fileImg
         }
         if (this.article === null) {
-          bus.$emit('addArticle', data)
+          this.$emit('addArticle', data)
+          console.log('s')
         } else {
           data.id = this.article.id
           if (this.$refs.fileImg.value === '') {
             data.img = this.article.img
           }
-          bus.$emit('updataArticle', data)
+          this.$emit('updataArticle', data)
         }
       }
     },
     watch: {
       panelShow: 'getArticle'
-    },
-    created () {
-      bus.$on('deltag', (index) => {
-        this.tags.splice(index, 1)
-      })
     },
     components: {
       edittag: edittag

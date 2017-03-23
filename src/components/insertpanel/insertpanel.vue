@@ -16,8 +16,6 @@
   </div>
 </template>
 <script>
-  import {bus} from '../../assets/js/bus.js'
-
   const OK = 1
 
   export default {
@@ -35,7 +33,7 @@
       hidePanel () {
         this.$refs.img.setAttribute('src', '/images/default.png')
         this.$refs.insertForm.reset()
-        bus.$emit('hideInsertPanel', false)
+        this.$emit('hideInsertPanel', false)
       },
       addImg () {
         let resultFile = this.$refs.fileImg.files[0]
@@ -59,7 +57,7 @@
               let res = response.data
               if (res.code === OK) {
                 console.log(res.data.imgLink)
-                bus.$emit('insertImg', res.data.imgLink)
+                Vue.$emit('insertImg', res.data.imgLink)
                 Vue.hidePanel()
               }
             })

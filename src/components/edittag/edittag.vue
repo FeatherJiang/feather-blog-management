@@ -5,8 +5,6 @@
   </span>
 </template>
 <script>
-  import {bus} from '../../assets/js/bus.js'
-
   export default {
     props: {
       tag: {
@@ -18,7 +16,7 @@
     },
     methods: {
       delTag () {
-        bus.$emit('deltag', this.index)
+        this.$emit('delTag', this.index)
       }
     }
   }
