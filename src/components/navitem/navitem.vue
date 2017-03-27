@@ -55,7 +55,7 @@
     .hint
       position absolute
       z-index 1
-      left -30px
+      left -50px
       height 40px
       padding 0 5px
       text-align center

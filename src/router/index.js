@@ -6,6 +6,7 @@ import admin from 'components/admin/admin'
 import write from 'components/write/write'
 import article from 'components/article/article'
 import banner from 'components/banner/banner'
+import aboutme from 'components/aboutme/aboutme'
 
 Vue.use(Router)
 
@@ -32,6 +33,10 @@ export default new Router({
         {
           path: 'banner',
           component: banner
+        },
+        {
+          path: 'aboutme',
+          component: aboutme
         }
       ]
     }

@@ -29,6 +29,11 @@
             routerLink: '/admin/banner',
             fontClass: 'fa-star',
             hintText: 'banner'
+          },
+          {
+            routerLink: '/admin/aboutme',
+            fontClass: 'fa-id-card',
+            hintText: 'aboutme'
           }
         ]
       }
