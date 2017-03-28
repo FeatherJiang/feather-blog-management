@@ -6,12 +6,15 @@
     </div>
     <div class="markdown-wrapper">
       <markdown :text="content"></markdown>
-      <button id="create-btn" @click="">update</button>
+      <button id="create-btn" @click="update">update</button>
     </div>
     <transition name="pop">
       <div class="insertpanel-wrapper" v-show="insertPanelShow">
         <insertpanel @hideInsertPanel="hideInsertPanel" @insertImg="insertImg" :panelShow="insertPanelShow"></insertpanel>
       </div>
+    </transition>
+    <transition name="slip">
+      <div class="hint" v-show="hintShow">{{text}}</div>
     </transition>
   </div>
 </template>
@@ -25,7 +28,9 @@
     data () {
       return {
         content: '',
-        insertPanelShow: false
+        insertPanelShow: false,
+        hintShow: false,
+        text: 'error'
       }
     },
     methods: {
@@ -39,13 +44,30 @@
         this.content = this.content + '\n' + `![](${imgLink})`
       },
       update () {
+        let Vue = this
         this.$http.post('api/updateAboutMe', {content: this.content})
           .then(function (response) {
             let res = response.data
             if (res.code === OK) {
+              Vue.hintShow = true
+              Vue.text = 'success'
+              setTimeout(function () {
+                Vue.hintShow = false
+              }, 2000)
+            } else {
+              Vue.hintShow = true
+              Vue.text = 'error'
+              setTimeout(function () {
+                Vue.hintShow = false
+              }, 2000)
             }
           })
           .catch(function (error) {
+            Vue.hintShow = true
+            Vue.text = 'error'
+            setTimeout(function () {
+              Vue.hintShow = false
+            }, 2000)
             console.log(error.toString())
           })
       }
@@ -168,4 +190,23 @@
         transform translate(0, -200%)
       .setpanel-inner
         transform translate(0, -200%)
+    .hint
+      position absolute
+      z-index 1
+      top 0
+      left 50%
+      width 80px
+      height 20px
+      margin 0 0 0 -40px
+      text-align center
+      line-height 20px
+      font-size 16px
+      color #f92452
+      background #f7f7f7
+      border-radius 0 0 5px 5px
+      box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+    .slip-enter-active, .slip-leave-active
+      transition all 0.5s
+    .slip-enter, .slip-leave-active
+      transform translate(0,-30px)
 </style>
