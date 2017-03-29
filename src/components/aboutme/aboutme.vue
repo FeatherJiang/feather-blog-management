@@ -45,7 +45,7 @@
       },
       update () {
         let Vue = this
-        this.$http.post('api/updateAboutMe', {content: this.content})
+        this.$http.post('api/updateAboutMe', {token: sessionStorage.getItem('token'), content: this.content})
           .then(function (response) {
             let res = response.data
             if (res.code === OK) {
@@ -73,11 +73,12 @@
       }
     },
     created () {
+      let Vue = this
       this.$http.post('api/getAboutMe', null)
         .then(function (response) {
           let res = response.data
           if (res.code === OK) {
-            this.content = res.data
+            Vue.content = res.data
           }
         })
         .catch(function (error) {
