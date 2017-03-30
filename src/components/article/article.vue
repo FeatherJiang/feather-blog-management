@@ -10,7 +10,7 @@
           </div>
         </div>
       </transition-group>
-      <div class="loading-wrapper">
+      <div class="loading-wrapper" v-if="articleList.length >= 10">
         <div class="more" @click="getMore" v-show="showMore">
           {{text}}
         </div>

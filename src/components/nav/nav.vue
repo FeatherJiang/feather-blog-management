@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <a class="logo-wrapper" href="#">
+    <a class="logo-wrapper" href="http://www.jiangfeather.com" target="_blank">
       <img src="../../assets/imgs/feather_white.png" alt="" class="logo" width="40" height="40">
     </a>
     <div class="navitem-wrapper" v-for="item in itemList">

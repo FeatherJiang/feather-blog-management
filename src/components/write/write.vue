@@ -98,7 +98,11 @@
         let formData = new FormData()
         formData.append('token', sessionStorage.getItem('token'))
         formData.append('article', JSON.stringify(article))
-        formData.append('img', data.img)
+        if (data.img.files[0] !== undefined) {
+          formData.append('img', data.img.files[0])
+        } else {
+          formData.append('img', data.img)
+        }
 
         let Vue = this
         this.$http.post('/api/updateArticle', formData)
