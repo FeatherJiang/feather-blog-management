@@ -30,7 +30,7 @@
       return {
         text: 'more',
         showMore: true,
-        articleList: null,
+        articleList: [],
         page: 1
       }
     },
@@ -114,13 +114,16 @@
         .profile
           display inline-block
           margin 10px 0
+        @media (max-width 1024px)
+          .profile
+            display flex
         .btn-wrapper
           vertical-align top
           display inline-block
-          margin 10px
+          margin 10px 0 10px 10px
           #modify-btn, #del-btn
             display block
-            width 100px
+            width 80px
             height 30px
             font-size 20px
             color #4285f4
@@ -136,6 +139,13 @@
               outline none
           #del-btn
             margin 10px 0 0
+        @media (max-width 1024px)
+          .btn-wrapper
+            flex 0 0 80px
+      @media (max-width 1024px)
+        .profile-wrapper
+          display flex
+          width 100%
       .loading-wrapper
         width 920px
         margin 10px auto 20px
@@ -152,4 +162,8 @@
         .loading
           margin 0 auto
           padding 5px 0
+    @media (max-width 1024px)
+      .article-wrapper
+        padding 0 10px
+        box-sizing border-box
 </style>

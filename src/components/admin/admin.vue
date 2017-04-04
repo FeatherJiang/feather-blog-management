@@ -1,6 +1,6 @@
 <template>
-  <div class="admin">
-    <div class="nav-wrapper">
+  <div class="admin" ref="admin">
+    <div class="nav-wrapper" ref="nav">
       <v-nav></v-nav>
     </div>
     <transition name="switch">
@@ -11,8 +11,20 @@
 </template>
 <script>
   import nav from 'components/nav/nav'
+  import Hammer from 'hammerjs'
 
   export default {
+    mounted () {
+      var mc = new Hammer(this.$refs.admin)
+
+      mc.on('swipeleft', function (ev) {
+        this.$refs.nav.style.display = 'none'
+      })
+
+      mc.on('swiperight', function (ev) {
+        this.$refs.nav.style.display = 'block'
+      })
+    },
     components: {
       'v-nav': nav
     }
@@ -27,6 +39,10 @@
       flex 0 0 50px
       height 100%
       background #4285f4
+      transition all .5s ease
+    @media (max-width 667px)
+      .nav-wrapper
+        display none
     .main
       flex 1
       height 100%

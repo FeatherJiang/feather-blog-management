@@ -189,6 +189,14 @@
         &:hover
           color #fff
           background #4285f4
+      @media (max-width 667px)
+        #insert-img-btn
+          display block
+          top 10px
+          right 80px
+    @media (max-width 667px)
+      .input-wrapper
+        width 100%
     .markdown-wrapper
       position relative
       display inline-block
@@ -218,6 +226,15 @@
         &:hover
           color #fff
           background #4285f4
+      @media (max-width 667px)
+        #create-btn
+          position fixed
+          display block
+          top 10px
+          right 10px
+    @media (max-width 667px)
+      .markdown
+        display none
     .insertpanel-wrapper
       position absolute
       top 0

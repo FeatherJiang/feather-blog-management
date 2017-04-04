@@ -125,7 +125,6 @@
         }
         if (this.article === null) {
           this.$emit('addArticle', data)
-          console.log('s')
         } else {
           data.id = this.article.id
           if (this.$refs.fileImg.value === '') {
