@@ -61,6 +61,7 @@
   .banner
     width 100%
     overflow auto
+    -webkit-overflow-scrolling: touch
   @media (max-width: 667px)
     .banner
       position relative

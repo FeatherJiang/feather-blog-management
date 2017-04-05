@@ -2,11 +2,11 @@
   <div class="aboutme" ref="aboutme">
     <div class="input-wrapper">
       <textarea id="content" contenteditable="true" v-model="content" ref="content"></textarea>
-      <button id="insert-img-btn" @click="toggleInsertPanel"><i class="fa fa-picture-o"></i></button>
+      <div id="insert-img-btn" @click="toggleInsertPanel"><i class="fa fa-picture-o"></i></div>
     </div>
     <div class="markdown-wrapper">
       <markdown :text="content"></markdown>
-      <button id="create-btn" @click="update">update</button>
+      <div id="create-btn" @click="update">update</div>
     </div>
     <transition name="pop">
       <div class="insertpanel-wrapper" v-show="insertPanelShow">
@@ -144,6 +144,7 @@
         background #333
         border none
         box-sizing border-box
+        -webkit-overflow-scrolling: touch
         &:focus
           outline none
       #insert-img-btn
@@ -153,6 +154,8 @@
         height 30px
         top: 10px
         right 10px
+        text-align center
+        line-height 30px
         font-size 18px
         color #4285f4
         background #f7f7f7
@@ -190,6 +193,8 @@
         height 30px
         top: 10px
         right 10px
+        text-align center
+        line-height 30px
         font-size 18px
         color #4285f4
         background #f7f7f7

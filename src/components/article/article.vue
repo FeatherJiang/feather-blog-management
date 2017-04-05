@@ -5,8 +5,8 @@
         <div class="profile-wrapper" v-for="(article, index) in articleList" :key="article.id">
           <profile :article="article"></profile>
           <div class="btn-wrapper">
-            <button id="modify-btn" @click="modifyArticle(article)">modify</button>
-            <button id="del-btn" @click="deleteArticle(index)">delete</button>
+            <div id="modify-btn" @click="modifyArticle(article)">modify</div>
+            <div id="del-btn" @click="deleteArticle(index)">delete</div>
           </div>
         </div>
       </transition-group>
@@ -121,6 +121,7 @@
     width 100%
     height 100%
     overflow auto
+    -webkit-overflow-scrolling: touch
     .article-wrapper
       width 100%
       .push-move
@@ -150,6 +151,8 @@
             display block
             width 80px
             height 30px
+            text-align center
+            line-height 30px
             font-size 20px
             color #4285f4
             background #f7f7f7
