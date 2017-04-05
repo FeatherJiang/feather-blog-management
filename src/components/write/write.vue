@@ -142,6 +142,7 @@
       }
     },
     mounted () {
+      delete Hammer.defaults.cssProps.userSelect
       var mc = new Hammer(this.$refs.content)
 
       let Vue = this
