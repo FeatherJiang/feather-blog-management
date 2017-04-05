@@ -4,7 +4,7 @@
       <v-nav></v-nav>
     </div>
     <transition name="switch">
-      <router-view>
+      <router-view :nav="this.$refs.nav">
       </router-view>
     </transition>
   </div>
@@ -17,13 +17,25 @@
     mounted () {
       var mc = new Hammer(this.$refs.admin)
 
+      let Vue = this
       mc.on('swipeleft', function (ev) {
-        this.$refs.nav.style.display = 'none'
+        if (window.screen.width < 667) {
+          Vue.$refs.nav.style.left = '-50px'
+        }
       })
 
       mc.on('swiperight', function (ev) {
-        this.$refs.nav.style.display = 'block'
+        if (window.screen.width < 667) {
+          Vue.$refs.nav.style.left = '0px'
+        }
       })
+    },
+    watch: {
+      '$route': function () {
+        if (window.screen.width < 667) {
+          this.$refs.nav.style.left = '-50px'
+        }
+      }
     },
     components: {
       'v-nav': nav
@@ -42,7 +54,10 @@
       transition all .5s ease
     @media (max-width 667px)
       .nav-wrapper
-        display none
+        position fixed
+        z-index 99
+        top 0
+        left -50px
     .main
       flex 1
       height 100%

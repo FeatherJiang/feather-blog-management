@@ -1,7 +1,7 @@
 <template>
-  <div class="aboutme">
+  <div class="aboutme" ref="aboutme">
     <div class="input-wrapper">
-      <textarea id="content" contenteditable="true" v-model="content"></textarea>
+      <textarea id="content" contenteditable="true" v-model="content" ref="content"></textarea>
       <button id="insert-img-btn" @click="toggleInsertPanel"><i class="fa fa-picture-o"></i></button>
     </div>
     <div class="markdown-wrapper">
@@ -19,12 +19,19 @@
   </div>
 </template>
 <script>
+  import Hammer from 'hammerjs'
+
   import markdown from 'components/markdown/markdown'
   import insertpanel from 'components/insertpanel/insertpanel'
 
   const OK = 1
 
   export default {
+    props: {
+      nav: {
+        type: HTMLDivElement
+      }
+    },
     data () {
       return {
         content: '',
@@ -85,6 +92,24 @@
           console.log(error.toString())
         })
     },
+    mounted () {
+      var mc = new Hammer(this.$refs.content)
+
+      let Vue = this
+      mc.on('swipeleft', function (ev) {
+        if (window.screen.width < 667) {
+          Vue.nav.style.left = '-50px'
+          Vue.$refs.aboutme.style.left = '0'
+        }
+      })
+
+      mc.on('swiperight', function (ev) {
+        if (window.screen.width < 667) {
+          Vue.nav.style.left = '0px'
+          Vue.$refs.aboutme.style.left = '50px'
+        }
+      })
+    },
     components: {
       markdown: markdown,
       insertpanel: insertpanel
@@ -97,6 +122,7 @@
     width 100%
     height 100%
     font-size 0
+    transition all .5s ease
     .input-wrapper
       position relative
       vertical-align top
@@ -177,13 +203,14 @@
           background #4285f4
       @media (max-width 667px)
         #create-btn
-          position fixed
+          position absolute
           display block
           top 10px
           right 10px
     @media (max-width 667px)
       .markdown-wrapper
         width 0
+        overflow visible
         .markdown
           display none
     .insertpanel-wrapper

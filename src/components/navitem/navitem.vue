@@ -66,4 +66,7 @@
       border-right 4px solid #4285f4
       box-sizing border-box
       transition all 0.5s ease
+    @media (max-width 667px)
+      .hint
+        display none
 </style>

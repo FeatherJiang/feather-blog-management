@@ -1,5 +1,5 @@
 <template>
-  <div class="article">
+  <div class="article" ref="article">
     <div class="article-wrapper">
       <transition-group tag="div" name="push">
         <div class="profile-wrapper" v-for="(article, index) in articleList" :key="article.id">
@@ -20,12 +20,19 @@
   </div>
 </template>
 <script>
+  import Hammer from 'hammerjs'
+
   import profile from 'components/profile/profile'
   import loading from 'components/loading/loading'
 
   const OK = 1
 
   export default {
+    props: {
+      nav: {
+        type: HTMLDivElement
+      }
+    },
     data () {
       return {
         text: 'more',
@@ -84,6 +91,24 @@
         .catch(function (error) {
           console.log(error.toString())
         })
+    },
+    mounted () {
+      var mc = new Hammer(this.$refs.article)
+
+      let Vue = this
+      mc.on('swipeleft', function (ev) {
+        if (window.screen.width < 667) {
+          Vue.nav.style.left = '-50px'
+          Vue.$refs.article.style.left = '0'
+        }
+      })
+
+      mc.on('swiperight', function (ev) {
+        if (window.screen.width < 667) {
+          Vue.nav.style.left = '0px'
+          Vue.$refs.article.style.left = '50px'
+        }
+      })
     },
     components: {
       profile: profile,
@@ -166,4 +191,8 @@
       .article-wrapper
         padding 0 10px
         box-sizing border-box
+  @media (max-width 667px)
+    .article
+      position relative
+      transition all .5s ease
 </style>

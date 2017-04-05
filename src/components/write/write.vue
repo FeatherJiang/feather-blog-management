@@ -1,7 +1,7 @@
 <template>
-  <div class="write">
+  <div class="write" ref="write">
     <div class="input-wrapper">
-      <textarea id="content" contenteditable="true" v-model="content"></textarea>
+      <textarea id="content" contenteditable="true" v-model="content" ref="content"></textarea>
       <button id="insert-img-btn" @click="toggleInsertPanel"><i class="fa fa-picture-o"></i></button>
     </div>
     <div class="markdown-wrapper">
@@ -22,6 +22,7 @@
 </template>
 <script>
   import {urlParse} from '../../assets/js/urlParse'
+  import Hammer from 'hammerjs'
 
   import markdown from 'components/markdown/markdown'
   import setpanel from 'components/setpanel/setpanel'
@@ -30,6 +31,11 @@
   const OK = 1
 
   export default {
+    props: {
+      nav: {
+        type: HTMLDivElement
+      }
+    },
     data () {
       return {
         content: '',
@@ -135,6 +141,24 @@
           })
       }
     },
+    mounted () {
+      var mc = new Hammer(this.$refs.content)
+
+      let Vue = this
+      mc.on('swipeleft', function (ev) {
+        if (window.screen.width < 667) {
+          Vue.nav.style.left = '-50px'
+          Vue.$refs.write.style.left = '0'
+        }
+      })
+
+      mc.on('swiperight', function (ev) {
+        if (window.screen.width < 667) {
+          Vue.nav.style.left = '0px'
+          Vue.$refs.write.style.left = '50px'
+        }
+      })
+    },
     components: {
       markdown: markdown,
       setpanel: setpanel,
@@ -169,6 +193,7 @@
         background #333
         border none
         box-sizing border-box
+        transition all .5s ease
         &:focus
           outline none
       #insert-img-btn
@@ -228,13 +253,15 @@
           background #4285f4
       @media (max-width 667px)
         #create-btn
-          position fixed
+          position absolute
           display block
+          z-index 5
           top 10px
           right 10px
     @media (max-width 667px)
       .markdown-wrapper
         width 0
+        overflow visible
         .markdown
           display none
     .insertpanel-wrapper
@@ -261,4 +288,8 @@
         transform translate(0, -200%)
       .setpanel-inner
         transform translate(0, -200%)
+  @media (max-width 667px)
+    .write
+      position relative
+      transition all .5s ease
 </style>

@@ -177,6 +177,9 @@
             width 300px
             margin 20px auto 0
             border-radius 2px
+          @media (max-width 667px)
+            img
+              width 100%
           .input-wrapper
             position relative
             left 50%
@@ -235,6 +238,10 @@
               border 2px solid #4285f4
               border-left none
               outline none
+        @media (max-width 667px)
+          .title-wrapper
+            display flex
+            width 100%
         .type-wrapper
           width 460px
           height 30px
@@ -253,6 +260,9 @@
             color #fff
             background #4285f4
             border-radius 5px 0 0 5px
+          @media (max-width 667px)
+            .text
+              flex 0 0 auto
           #type
             width 380px
             height 30px
@@ -269,11 +279,19 @@
               border-left 0
               border-radius 0 5px 5px 0
               outline none
+          @media (max-width 667px)
+            #type
+              flex 1 1 auto
+        @media (max-width 667px)
+          .type-wrapper
+            display flex
+            width 100%
         .tag-wrapper
           width 460px
           margin 20px 0
           font-size 0
           border-radius 5px
+          background #4285f4
           box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
           .text
             display table-cell
@@ -285,6 +303,10 @@
             color #fff
             background #4285f4
             border-radius 5px 0 0 5px
+          @media (max-width 667px)
+            .text
+              flex 0 0 80px
+              line-height 30px
           .tags
             display table-cell
             width 380px
@@ -326,6 +348,13 @@
                 transition all 0.2s
                 &:hover
                   background rgba(66, 133, 244, 1)
+          @media (max-width 667px)
+            .tags
+              flex 1 1 auto
+        @media (max-width 667px)
+          .tag-wrapper
+            display flex
+            width 100%
         .overview-wrapper
           width 460px
           margin 20px 0
@@ -343,6 +372,9 @@
             color #fff
             background #4285f4
             border-radius 5px 0 0 5px
+          @media (max-width 667px)
+            .text
+              flex 0 0 80px
           #overview
             display inline-block
             width 380px
@@ -358,6 +390,13 @@
               border 2px solid #4285f4
               border-left none
               outline none
+          @media (max-width 667px)
+            #overview
+              flex 1 1 auto
+        @media (max-width 667px)
+          .overview-wrapper
+            display flex
+            width 100%
         #confirm
           display block
           width 100px
@@ -373,4 +412,9 @@
           &:hover
             color #fff
             background #4285f4
+    @media (max-width 667px)
+      .setpanel-main
+        width 100%
+        padding 0 10px
+        box-sizing border-box
 </style>

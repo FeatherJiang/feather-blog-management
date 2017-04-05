@@ -82,6 +82,11 @@
     .insertpanel-main
       width 500px
       margin 50px auto
+    @media (max-width 667px)
+      .insertpanel-main
+        width 100%
+        padding 0 10px
+        box-sizing border-box
     .insertpanel-inner
       position relative
       width 100%
@@ -104,6 +109,9 @@
         img
           width 300px
           border-radius 2px
+        @media (max-width 667px)
+          img
+            width 100%
       .input-wrapper
         position relative
         left 50%
