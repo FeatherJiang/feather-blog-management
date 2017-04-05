@@ -233,8 +233,10 @@
           top 10px
           right 10px
     @media (max-width 667px)
-      .markdown
-        display none
+      .markdown-wrapper
+        width 0
+        .markdown
+          display none
     .insertpanel-wrapper
       position absolute
       top 0

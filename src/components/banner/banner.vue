@@ -36,4 +36,8 @@
   .banner
     width 100%
     overflow auto
+  @media (max-width: 667px)
+    .banner
+      padding 0 10px
+      box-sizing border-box
 </style>

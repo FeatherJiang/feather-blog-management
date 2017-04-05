@@ -104,6 +104,9 @@
         width 300px
         margin 20px auto 0
         border-radius 2px
+      @media (max-width 667px)
+        img
+          width 100%
       .input-wrapper
         position relative
         left 50%
@@ -146,9 +149,13 @@
         color #fff
         background #4285f4
         border-radius 5px 0 0 5px
+      @media (max-width 667px)
+        .text
+          flex 0 0 80px
       #link
         display inline-block
         width 380px
+        min-width 60px
         height 30px
         vertical-align top
         line-height 30px
@@ -162,6 +169,13 @@
           border 2px solid #4285f4
           border-left none
           outline none
+      @media (max-width 667px)
+        #link
+          flex 1 1 auto
+    @media (max-width 667px)
+      .link-wrapper
+        display flex
+        width 100%
     .btn-wrapper
       position relative
       margin 30px 0
@@ -206,4 +220,7 @@
         transition all 0.5s
       .slip-enter, .slip-leave-active
         transform translate(0,-30px)
+  @media (max-width 667px)
+    .bannerset
+      width 100%
 </style>
