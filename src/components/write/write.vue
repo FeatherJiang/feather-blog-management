@@ -23,6 +23,7 @@
 <script>
   import {urlParse} from '../../assets/js/urlParse'
   import Hammer from 'hammerjs'
+  import axios from 'axios'
 
   import markdown from 'components/markdown/markdown'
   import setpanel from 'components/setpanel/setpanel'
@@ -41,7 +42,8 @@
         content: '',
         article: null,
         setPanelShow: false,
-        insertPanelShow: false
+        insertPanelShow: false,
+        cancel: null
       }
     },
     methods: {
@@ -80,7 +82,19 @@
         formData.append('img', data.img.files[0])
 
         let Vue = this
-        this.$http.post('/api/addArticle', formData)
+
+        if (Vue.cancel !== null) {
+          Vue.cancel()
+        }
+
+        var CancelToken = axios.CancelToken
+
+        this.$http.post('/api/addArticle', formData, {
+          cancelToken: new CancelToken(function executor (c) {
+            // An executor function receives a cancel function as a parameter
+            Vue.cancel = c
+          })
+        })
           .then(function (response) {
             let res = response.data
             if (res.code === OK) {

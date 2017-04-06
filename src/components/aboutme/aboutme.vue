@@ -20,6 +20,7 @@
 </template>
 <script>
   import Hammer from 'hammerjs'
+  import axios from 'axios'
 
   import markdown from 'components/markdown/markdown'
   import insertpanel from 'components/insertpanel/insertpanel'
@@ -37,7 +38,8 @@
         content: '',
         insertPanelShow: false,
         hintShow: false,
-        text: 'error'
+        text: 'error',
+        cancel: null
       }
     },
     methods: {
@@ -52,7 +54,19 @@
       },
       update () {
         let Vue = this
-        this.$http.post('api/updateAboutMe', {token: sessionStorage.getItem('token'), content: this.content})
+
+        if (Vue.cancel !== null) {
+          Vue.cancel()
+        }
+
+        var CancelToken = axios.CancelToken
+
+        this.$http.post('api/updateAboutMe', {token: sessionStorage.getItem('token'), content: this.content}, {
+          cancelToken: new CancelToken(function executor (c) {
+            // An executor function receives a cancel function as a parameter
+            Vue.cancel = c
+          })
+        })
           .then(function (response) {
             let res = response.data
             if (res.code === OK) {

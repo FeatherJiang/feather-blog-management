@@ -20,6 +20,8 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
+
   const OK = 1
 
   export default {
@@ -32,7 +34,8 @@
       return {
         link: this.banner.link,
         hintShow: false,
-        text: 'error'
+        text: 'error',
+        cancel: null
       }
     },
     methods: {
@@ -52,6 +55,13 @@
       },
       updateBanner () {
         let Vue = this
+
+        if (Vue.cancel !== null) {
+          Vue.cancel()
+        }
+
+        var CancelToken = axios.CancelToken
+
         let formData = new FormData()
         if (this.$refs.fileImg.value !== '') {
           formData.append('img', this.$refs.fileImg.files[0])
@@ -63,7 +73,12 @@
         formData.append('id', this.banner.id)
         formData.append('token', sessionStorage.getItem('token'))
 
-        this.$http.post('api/updateBanner', formData)
+        this.$http.post('api/updateBanner', formData, {
+          cancelToken: new CancelToken(function executor (c) {
+            // An executor function receives a cancel function as a parameter
+            Vue.cancel = c
+          })
+        })
           .then(function (response) {
             let res = response.data
             if (res.code === OK) {

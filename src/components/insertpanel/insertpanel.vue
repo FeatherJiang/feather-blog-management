@@ -16,6 +16,8 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
+
   const OK = 1
 
   export default {
@@ -26,7 +28,8 @@
     },
     data () {
       return {
-        imgLink: ''
+        imgLink: '',
+        cancel: null
       }
     },
     methods: {
@@ -51,8 +54,20 @@
       },
       insertImg () {
         let Vue = this
+
+        if (Vue.cancel !== null) {
+          Vue.cancel()
+        }
+
+        var CancelToken = axios.CancelToken
+
         if (this.$refs.fileImg.value) {
-          this.$http.post('/api/insertImg', new FormData(Vue.$refs.insertForm))
+          this.$http.post('/api/insertImg', new FormData(Vue.$refs.insertForm), {
+            cancelToken: new CancelToken(function executor (c) {
+              // An executor function receives a cancel function as a parameter
+              Vue.cancel = c
+            })
+          })
             .then(function (response) {
               let res = response.data
               if (res.code === OK) {
