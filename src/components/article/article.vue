@@ -11,6 +11,10 @@
           </div>
         </div>
       </transition-group>
+      <div class="load-article" v-if="(articleList === null || articleList.length == 0) || loadingShow">
+        <span  v-if="(articleList === null || articleList.length == 0) && !loadingShow">no article</span>
+        <loading v-if="loadingShow"></loading>
+      </div>
       <div class="loading-wrapper" v-if="articleList.length >= 10">
         <div class="more" @click="getMore" v-show="showMore">
           {{text}}
@@ -39,7 +43,8 @@
         text: 'more',
         showMore: true,
         articleList: [],
-        page: 1
+        page: 1,
+        loadingShow: true
       }
     },
     methods: {
@@ -93,6 +98,7 @@
           let res = response.data
           if (res.code === OK) {
             Vue.articleList = res.data.articleList
+            Vue.loadingShow = false
           }
         })
         .catch(function (error) {
@@ -182,6 +188,21 @@
         .profile-wrapper
           display flex
           width 100%
+      .load-article
+        width 100%
+        height 25px
+        margin 10px 0
+        padding 5px 0
+        text-align center
+        line-height 25px
+        font-size 20px
+        color #4285f4
+        background #fff
+        box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+        border-radius 2px
+        .loading
+          text-align justify
+          margin 0 auto
       .loading-wrapper
         width 920px
         margin 10px auto 20px

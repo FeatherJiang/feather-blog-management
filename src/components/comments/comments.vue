@@ -11,6 +11,10 @@
           </div>
         </div>
       </transition-group>
+      <div class="load-article" v-if="(comments === null || comments.length == 0) || loadingShow">
+        <span  v-if="(comments === null || comments.length == 0) && !loadingShow">no article</span>
+        <loading v-if="loadingShow"></loading>
+      </div>
       <div class="loading-wrapper" v-if="comments.length >= 10">
         <div class="more" @click="getMore" v-show="showMore">
           {{text}}
@@ -25,6 +29,7 @@
   import Hammer from 'hammerjs'
 
   import commentitem from 'components/commentitem/commentitem'
+  import loading from 'components/loading/loading'
 
   const OK = 1
 
@@ -38,6 +43,7 @@
       return {
         text: 'more',
         showMore: true,
+        loadingShow: true,
         comments: [],
         page: 1
       }
@@ -68,17 +74,20 @@
       },
       deleteComment (index) {
         let Vue = this
+        let param = urlParse()
         let token = sessionStorage.getItem('token')
-        this.$http.post('/api/deleteComment', {id: this.comments[index].id, token: token})
-          .then(function (response) {
-            let res = response.data
-            if (res.code === OK) {
-              Vue.comments.splice(index, 1)
-            }
-          })
-          .catch(function (error) {
-            console.log(error.toString())
-          })
+        if (param.id !== undefined) {
+          this.$http.post('/api/deleteComment', {articleId: param.id, commentId: this.comments[index].id, token: token})
+            .then(function (response) {
+              let res = response.data
+              if (res.code === OK) {
+                Vue.comments.splice(index, 1)
+              }
+            })
+            .catch(function (error) {
+              console.log(error.toString())
+            })
+        }
       }
     },
     created () {
@@ -90,6 +99,7 @@
             let res = response.data
             if (res.code === OK) {
               Vue.comments = res.data.comments
+              Vue.loadingShow = false
             }
           })
           .catch(function (error) {
@@ -117,7 +127,8 @@
       })
     },
     components: {
-      commentitem: commentitem
+      commentitem: commentitem,
+      loading: loading
     }
   }
 </script>
@@ -163,6 +174,7 @@
             border none
             border-radius 2px
             box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+            cursor pointer
             transition all .5s ease
             &:hover
               color #fff
@@ -176,6 +188,21 @@
         .comment-list
           display flex
           width 100%
+      .load-article
+        width 100%
+        height 25px
+        margin 10px 0
+        padding 5px 0
+        text-align center
+        line-height 25px
+        font-size 20px
+        color #4285f4
+        background #fff
+        box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
+        border-radius 2px
+        .loading
+          text-align justify
+          margin 0 auto
       .loading-wrapper
         width 920px
         margin 10px auto 20px
