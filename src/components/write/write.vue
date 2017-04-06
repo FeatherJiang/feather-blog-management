@@ -118,7 +118,7 @@
         let formData = new FormData()
         formData.append('token', sessionStorage.getItem('token'))
         formData.append('article', JSON.stringify(article))
-        if (data.img.files[0] !== undefined) {
+        if (data.img.files !== undefined) {
           formData.append('img', data.img.files[0])
         } else {
           formData.append('img', data.img)
