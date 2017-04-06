@@ -71,9 +71,9 @@
     overflow auto
     -webkit-overflow-scrolling: touch
     .load-article
-      width 100%
+      width 920px
       height 25px
-      margin 10px 0
+      margin 10px auto
       padding 5px 0
       text-align center
       line-height 25px
@@ -85,6 +85,9 @@
       .loading
         text-align justify
         margin 0 auto
+    @media (max-width 1024px)
+      .load-article
+        width 100%
   @media (max-width: 667px)
     .banner
       position relative
