@@ -1,17 +1,17 @@
 <template>
-  <div class="article" ref="article">
-    <div class="article-wrapper">
+  <div class="comments" ref="comments">
+    <div class="comments-wrapper">
       <transition-group tag="div" name="push">
-        <div class="profile-wrapper" v-for="(article, index) in articleList" :key="article.id">
-          <profile :article="article"></profile>
+        <div class="comment-list" v-for="(comment, index) in comments" :key="comment.id">
+          <div class="commentitem-wrapper">
+            <commentitem :comment="comment"></commentitem>
+          </div>
           <div class="btn-wrapper">
-            <div class="modify-btn" @click="modifyArticle(article)">modify</div>
-            <div class="comment-btn" @click="modifyComment(article)">comment</div>
-            <div class="del-btn" @click="deleteArticle(index)">delete</div>
+            <div class="delete-btn" @click="deleteComment(index)">delete</div>
           </div>
         </div>
       </transition-group>
-      <div class="loading-wrapper" v-if="articleList.length >= 10">
+      <div class="loading-wrapper" v-if="comments.length >= 10">
         <div class="more" @click="getMore" v-show="showMore">
           {{text}}
         </div>
@@ -21,10 +21,10 @@
   </div>
 </template>
 <script>
+  import {urlParse} from '../../assets/js/urlParse'
   import Hammer from 'hammerjs'
 
-  import profile from 'components/profile/profile'
-  import loading from 'components/loading/loading'
+  import commentitem from 'components/commentitem/commentitem'
 
   const OK = 1
 
@@ -38,7 +38,7 @@
       return {
         text: 'more',
         showMore: true,
-        articleList: [],
+        comments: [],
         page: 1
       }
     },
@@ -46,39 +46,34 @@
       getMore () {
         let Vue = this
         this.showMore = false
-        this.$http.post('/api/getArticleList', {page: this.page + 1})
-          .then(function (response) {
-            let res = response.data
-            if (res.code === OK) {
-              if (res.data.articleList.length > 0) {
-                Vue.articleList = Vue.articleList.concat(res.data.articleList)
-                Vue.page += 1
-              } else {
-                Vue.text = 'no more'
+        let param = urlParse()
+        if (param.id !== undefined) {
+          this.$http.post('/api/getCommentList', {page: this.page + 1})
+            .then(function (response) {
+              let res = response.data
+              if (res.code === OK) {
+                if (res.data.comments.length > 0) {
+                  Vue.comments = Vue.comments.concat(res.data.comments)
+                  Vue.page += 1
+                } else {
+                  Vue.text = 'no more'
+                }
+                Vue.showMore = true
               }
-              Vue.showMore = true
-            }
-          })
-          .catch(function (error) {
-            console.log(error.toString())
-          })
+            })
+            .catch(function (error) {
+              console.log(error.toString())
+            })
+        }
       },
-      modifyArticle (article) {
-        this.$router.push({path: '/admin/write', query: {id: article.id}})
-        this.$router.push({path: '/admin/write', query: {id: article.id}})
-      },
-      modifyComment (article) {
-        this.$router.push({path: '/admin/comments', query: {id: article.id}})
-        this.$router.push({path: '/admin/comments', query: {id: article.id}})
-      },
-      deleteArticle (index) {
+      deleteComment (index) {
         let Vue = this
         let token = sessionStorage.getItem('token')
-        this.$http.post('/api/deleteArticle', {id: this.articleList[index].id, token: token})
+        this.$http.post('/api/deleteComment', {id: this.comments[index].id, token: token})
           .then(function (response) {
             let res = response.data
             if (res.code === OK) {
-              Vue.articleList.splice(index, 1)
+              Vue.comments.splice(index, 1)
             }
           })
           .catch(function (error) {
@@ -88,48 +83,51 @@
     },
     created () {
       let Vue = this
-      this.$http.post('/api/getArticleList', {page: this.page})
-        .then(function (response) {
-          let res = response.data
-          if (res.code === OK) {
-            Vue.articleList = res.data.articleList
-          }
-        })
-        .catch(function (error) {
-          console.log(error.toString())
-        })
+      let param = urlParse()
+      if (param.id !== undefined) {
+        this.$http.post('api/getCommentList', {id: param.id, page: this.page})
+          .then(function (response) {
+            let res = response.data
+            if (res.code === OK) {
+              Vue.comments = res.data.comments
+            }
+          })
+          .catch(function (error) {
+            console.log(error.toString())
+          })
+      }
     },
     mounted () {
-      var mc = new Hammer(this.$refs.article)
+      delete Hammer.defaults.cssProps.userSelect
+      var mc = new Hammer(this.$refs.comments)
 
       let Vue = this
       mc.on('swipeleft', function (ev) {
         if (window.screen.width < 667) {
           Vue.nav.style.left = '-50px'
-          Vue.$refs.article.style.left = '0'
+          Vue.$refs.comments.style.left = '0'
         }
       })
 
       mc.on('swiperight', function (ev) {
         if (window.screen.width < 667) {
           Vue.nav.style.left = '0px'
-          Vue.$refs.article.style.left = '50px'
+          Vue.$refs.comments.style.left = '50px'
         }
       })
     },
     components: {
-      profile: profile,
-      loading: loading
+      commentitem: commentitem
     }
   }
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
-  .article
+  .comments
     width 100%
     height 100%
     overflow auto
     -webkit-overflow-scrolling: touch
-    .article-wrapper
+    .comments-wrapper
       width 100%
       .push-move
         transition all .5s ease
@@ -140,21 +138,20 @@
         transform translate(100%, 0)
       .push-leave-active
         position absolute
-      .profile-wrapper
+      .comment-list
         width 920px
         margin 0 auto
         font-size 0
-        .profile
+        .commentitem-wrapper
           display inline-block
-          margin 10px 0
-        @media (max-width 1024px)
-          .profile
-            display flex
+          width 800px
+          .commentitem
+            margin 10px 0
         .btn-wrapper
           vertical-align top
           display inline-block
           margin 10px 0 10px 10px
-          .modify-btn, .comment-btn, .del-btn
+          .delete-btn
             display block
             width 90px
             height 30px
@@ -166,20 +163,17 @@
             border none
             border-radius 2px
             box-shadow 0 2px 5px 0 rgba(0,0,0,0.26)
-            cursor pointer
             transition all .5s ease
             &:hover
               color #fff
               background #4285f4
             &:focus
               outline none
-          .comment-btn, .del-btn
-            margin 10px 0 0
         @media (max-width 1024px)
           .btn-wrapper
             flex 0 0 90px
       @media (max-width 1024px)
-        .profile-wrapper
+        .comment-list
           display flex
           width 100%
       .loading-wrapper
@@ -199,11 +193,11 @@
           margin 0 auto
           padding 5px 0
     @media (max-width 1024px)
-      .article-wrapper
+      .comments-wrapper
         padding 0 10px
         box-sizing border-box
   @media (max-width 667px)
-    .article
+    .comments
       position relative
       transition all .5s ease
 </style>

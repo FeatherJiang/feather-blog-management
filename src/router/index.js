@@ -7,6 +7,7 @@ import write from 'components/write/write'
 import article from 'components/article/article'
 import banner from 'components/banner/banner'
 import aboutme from 'components/aboutme/aboutme'
+import comments from 'components/comments/comments'
 
 Vue.use(Router)
 
@@ -37,6 +38,10 @@ export default new Router({
         {
           path: 'aboutme',
           component: aboutme
+        },
+        {
+          path: 'comments',
+          component: comments
         }
       ]
     }
