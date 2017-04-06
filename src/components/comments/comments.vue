@@ -12,7 +12,7 @@
         </div>
       </transition-group>
       <div class="load-article" v-if="(comments === null || comments.length == 0) || loadingShow">
-        <span  v-if="(comments === null || comments.length == 0) && !loadingShow">no article</span>
+        <span  v-if="(comments === null || comments.length == 0) && !loadingShow">no comment</span>
         <loading v-if="loadingShow"></loading>
       </div>
       <div class="loading-wrapper" v-if="comments.length >= 10">

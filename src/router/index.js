@@ -25,22 +25,27 @@ export default new Router({
       children: [
         {
           path: 'write',
+          name: 'write',
           component: write
         },
         {
           path: 'article',
+          name: 'article',
           component: article
         },
         {
           path: 'banner',
+          name: 'banner',
           component: banner
         },
         {
           path: 'aboutme',
+          name: 'aboutme',
           component: aboutme
         },
         {
           path: 'comments',
+          name: 'comments',
           component: comments
         }
       ]

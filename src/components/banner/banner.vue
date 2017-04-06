@@ -1,7 +1,7 @@
 <template>
   <div class="banner" ref="banner">
     <div class="load-article" v-if="(bannerList === null || bannerList.length == 0) || loadingShow">
-      <span  v-if="(bannerList === null || bannerList.length == 0) && !loadingShow">no article</span>
+      <span  v-if="(bannerList === null || bannerList.length == 0) && !loadingShow">no banner</span>
       <loading v-if="loadingShow"></loading>
     </div>
     <bannerset v-for="(banner, index) in bannerList" :banner="banner" :key="banner"></bannerset>
