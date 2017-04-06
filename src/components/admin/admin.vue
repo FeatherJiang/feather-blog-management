@@ -4,10 +4,8 @@
       <v-nav></v-nav>
     </div>
     <transition name="switch">
-      <keep-alive exclude="write">
-        <router-view :nav="this.$refs.nav">
-        </router-view>
-      </keep-alive>
+      <router-view :nav="this.$refs.nav">
+      </router-view>
     </transition>
   </div>
 </template>
