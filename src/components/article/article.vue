@@ -222,6 +222,9 @@
         .loading
           margin 0 auto
           padding 5px 0
+      @media (max-width 1024px)
+        .loading-wrapper
+          width 100%
     @media (max-width 1024px)
       .article-wrapper
         padding 0 10px
