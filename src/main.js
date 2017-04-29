@@ -2,9 +2,12 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import axios from 'axios'
+import es6 from 'es6-promise'
 import App from './App'
 import router from './router'
 import 'assets/stylus/index.styl'
+
+es6.polyfill()
 
 Vue.config.productionTip = false
 

@@ -1,7 +1,7 @@
 <template>
   <div class="aboutme" ref="aboutme">
     <div class="input-wrapper">
-      <textarea id="content" contenteditable="true" v-model="content" ref="content"></textarea>
+      <div id="aboutme-content" ref="content"></div>
       <div id="insert-img-btn" @click="toggleInsertPanel"><i class="fa fa-picture-o"></i></div>
     </div>
     <div class="markdown-wrapper">
@@ -39,7 +39,8 @@
         insertPanelShow: false,
         hintShow: false,
         text: 'error',
-        cancel: null
+        cancel: null,
+        editor: null
       }
     },
     methods: {
@@ -100,6 +101,7 @@
           let res = response.data
           if (res.code === OK) {
             Vue.content = res.data
+            Vue.editor.setValue(Vue.content)
           }
         })
         .catch(function (error) {
@@ -107,10 +109,17 @@
         })
     },
     mounted () {
+      let Vue = this
+      this.editor = window.ace.edit('aboutme-content')
+      this.editor.setTheme('ace/theme/monokai')
+      this.editor.getSession().setMode('ace/mode/markdown')
+      this.editor.getSession().on('change', function (e) {
+        Vue.content = Vue.editor.getValue()
+      })
+      this.editor.setOption('wrap', 'free')
       delete Hammer.defaults.cssProps.userSelect
       var mc = new Hammer(this.$refs.content)
 
-      let Vue = this
       mc.on('swipeleft', function (ev) {
         if (window.screen.width < 667) {
           Vue.nav.style.left = '-50px'
@@ -148,10 +157,9 @@
       &:hover
         #insert-img-btn
           display block
-      #content
+      #aboutme-content
         width 100%
         height 100%
-        padding 20px
         line-height 1.5
         font-size 16px
         word-wrap: break-word;
@@ -164,6 +172,7 @@
           outline none
       #insert-img-btn
         position absolute
+        z-index 1
         display none
         width 30px
         height 30px
@@ -191,7 +200,6 @@
       .input-wrapper
         width 100%
     .markdown-wrapper
-      position relative
       display inline-block
       width 50%
       height 100%

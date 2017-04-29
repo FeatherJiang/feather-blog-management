@@ -69,7 +69,7 @@
         display none
     .overview
       display inline-block
-      max-width 540px
+      width 540px
       min-height 134px
       margin 10px
       vertical-align top
@@ -125,6 +125,7 @@
     @media (max-width 1024px)
       .overview
         flex 1 1 auto
+        width 100%
   @media (max-width 1024px)
     .profile
       display flex

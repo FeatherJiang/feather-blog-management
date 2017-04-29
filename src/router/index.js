@@ -8,6 +8,7 @@ import article from 'components/article/article'
 import banner from 'components/banner/banner'
 import aboutme from 'components/aboutme/aboutme'
 import comments from 'components/comments/comments'
+import notfound from 'components/notfound/notfound'
 
 Vue.use(Router)
 
@@ -49,6 +50,10 @@ export default new Router({
           component: comments
         }
       ]
+    },
+    {
+      path: '*',
+      component: notfound
     }
   ]
 })

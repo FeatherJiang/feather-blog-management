@@ -1,7 +1,7 @@
 <template>
   <div class="write" ref="write">
     <div class="input-wrapper">
-      <textarea id="content" contenteditable="true" v-model="content" ref="content"></textarea>
+      <div id="content" v-model="content" ref="content"></div>
       <div id="insert-img-btn" @click="toggleInsertPanel"><i class="fa fa-picture-o"></i></div>
     </div>
     <div class="markdown-wrapper">
@@ -43,7 +43,8 @@
         article: null,
         setPanelShow: false,
         insertPanelShow: false,
-        cancel: null
+        cancel: null,
+        editor: null
       }
     },
     methods: {
@@ -131,6 +132,7 @@
             if (res.code === OK) {
               Vue.toggleSetPanel()
               Vue.content = ''
+              Vue.$router.push({path: '/admin/article'})
             }
           })
           .catch(function (error) {
@@ -140,6 +142,7 @@
     },
     created () {
       let Vue = this
+
       let param = urlParse()
       if (param.id !== undefined) {
         this.$http.post('api/getArticleById', param)
@@ -148,6 +151,7 @@
             if (res.code === OK) {
               Vue.content = res.data.article.content
               Vue.article = res.data.article
+              Vue.editor.setValue(Vue.content)
             }
           })
           .catch(function (error) {
@@ -156,10 +160,17 @@
       }
     },
     mounted () {
+      let Vue = this
+      this.editor = window.ace.edit('content')
+      this.editor.setTheme('ace/theme/monokai')
+      this.editor.getSession().setMode('ace/mode/markdown')
+      this.editor.getSession().on('change', function (e) {
+        Vue.content = Vue.editor.getValue()
+      })
+      this.editor.setOption('wrap', 'free')
       delete Hammer.defaults.cssProps.userSelect
       var mc = new Hammer(this.$refs.content)
 
-      let Vue = this
       mc.on('swipeleft', function (ev) {
         if (window.screen.width < 667) {
           Vue.nav.style.left = '-50px'
@@ -200,7 +211,6 @@
       #content
         width 100%
         height 100%
-        padding 20px
         line-height 1.5
         font-size 16px
         word-wrap: break-word;
@@ -214,6 +224,7 @@
           outline none
       #insert-img-btn
         position absolute
+        z-index 1
         display none
         width 30px
         height 30px
@@ -241,7 +252,6 @@
       .input-wrapper
         width 100%
     .markdown-wrapper
-      position relative
       display inline-block
       width 50%
       height 100%
