@@ -1,7 +1,8 @@
 <template>
   <div class="write" ref="write">
     <div class="input-wrapper">
-      <div id="content" v-model="content" ref="content"></div>
+      <div id="content" v-model="content"></div>
+      <textarea id="media-content" v-model="content" ref="content"></textarea>
       <div id="insert-img-btn" @click="toggleInsertPanel"><i class="fa fa-picture-o"></i></div>
     </div>
     <div class="markdown-wrapper">
@@ -222,6 +223,28 @@
         -webkit-overflow-scrolling: touch
         &:focus
           outline none
+      @media (max-width 667px)
+        #content
+          display none
+      #media-content
+        display none
+        width 100%
+        height 100%
+        padding 20px
+        line-height 1.5
+        font-size 16px
+        word-wrap: break-word;
+        color #f7f7f7
+        background #333
+        border none
+        box-sizing border-box
+        transition all .5s ease
+        -webkit-overflow-scrolling: touch
+        &:focus
+          outline none
+      @media (max-width 667px)
+        #media-content
+          display inline-block
       #insert-img-btn
         position absolute
         z-index 1
