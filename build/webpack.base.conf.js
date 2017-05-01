@@ -9,7 +9,9 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.js',
+    vue: ['vue', 'vue-router', 'axios'],
+    vendor: ['marked', 'hammerjs', 'es6-promise']
   },
   output: {
     path: config.build.assetsRoot,

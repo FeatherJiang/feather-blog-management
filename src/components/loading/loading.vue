@@ -26,16 +26,16 @@
     .lt, .gt
       position relative
       display inline-block
-      width 30%
-      height 100%
+      width 15px
+      height 25px
     .lt
       animation loading1 0.5s ease infinite alternate
       .line-top
         position absolute
         top 32%
         display inline-block
-        width 100%
-        height 10%
+        width 15px
+        height 2.5px
         background color
         border-radius 5px
         transform rotate(-30deg)
@@ -43,8 +43,8 @@
         position absolute
         bottom 32%
         display inline-block
-        width 100%
-        height 10%
+        width 15px
+        height 2.5px
         background color
         border-radius 5px
         transform rotate(30deg)
@@ -54,8 +54,8 @@
         position absolute
         top 32%
         display inline-block
-        width 100%
-        height 10%
+        width 15px
+        height 2.5px
         background color
         border-radius 5px
         transform rotate(30deg)
@@ -63,20 +63,20 @@
         position absolute
         bottom 32%
         display inline-block
-        width 100%
-        height 10%
+        width 15px
+        height 2.5px
         background color
         border-radius 5px
         transform rotate(-30deg)
     .slash
       display inline-block
-      width 30%
-      height 100%
+      width 15px
+      height 25px
       text-align center
       .line
         display inline-block
-        width 18%
-        height 100%
+        width 3px
+        height 25px
         background color
         border-radius 5px
         transform rotate(30deg)

@@ -5,7 +5,6 @@
 </template>
 <script>
   import marked from 'marked'
-  import highlight from 'highlight.js'
 
   export default {
     props: {
@@ -31,7 +30,7 @@
         // Synchronous highlighting with highlight.js
         marked.setOptions({
           highlight: function (code) {
-            return highlight.highlightAuto(code).value
+            return window.hljs.highlightAuto(code).value
           }
         })
       })
@@ -49,7 +48,7 @@
         // Synchronous highlighting with highlight.js
         marked.setOptions({
           highlight: function (code) {
-            return highlight.highlightAuto(code).value
+            return window.hljs.highlightAuto(code).value
           }
         })
       }

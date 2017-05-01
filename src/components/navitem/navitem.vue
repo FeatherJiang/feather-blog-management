@@ -23,8 +23,8 @@
   @import "../../assets/stylus/font-awesome.min.css"
 
   .navitem
-    z-index 10
     position relative
+    z-index 10
     display block
     height 40px
     &.router-link-active
