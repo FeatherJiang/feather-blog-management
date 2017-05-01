@@ -23,6 +23,7 @@
   @import "../../assets/stylus/font-awesome.min.css"
 
   .navitem
+    z-index 10
     position relative
     display block
     height 40px
