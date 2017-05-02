@@ -62,7 +62,11 @@
         this.setPanelShow = boolean
       },
       insertImg (imgLink) {
-        this.content = this.content + '\n' + `![](${imgLink})`
+        if (window.screen.width < 667) {
+          this.content = this.content + '\n' + `![](${imgLink})`
+        } else {
+          this.editor.insert(`![](${imgLink})`)
+        }
       },
       addArticle (data) {
         let oDate = new Date()

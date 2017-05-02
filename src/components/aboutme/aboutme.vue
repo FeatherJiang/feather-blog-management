@@ -52,7 +52,11 @@
         this.insertPanelShow = boolean
       },
       insertImg (imgLink) {
-        this.content = this.content + '\n' + `![](${imgLink})`
+        if (window.screen.width < 667) {
+          this.content = this.content + '\n' + `![](${imgLink})`
+        } else {
+          this.editor.insert(`![](${imgLink})`)
+        }
       },
       update () {
         let Vue = this

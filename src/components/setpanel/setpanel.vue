@@ -266,13 +266,12 @@
           #type
             width 380px
             height 30px
-
             font-size 16px
             text-indent 10px
-
             background #f7f7f7
             border none
             box-sizing border-box
+            -webkit-appearance none
             &:focus
               background #fff
               border 2px solid #4285f4
