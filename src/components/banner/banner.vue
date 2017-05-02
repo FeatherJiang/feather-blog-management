@@ -91,6 +91,7 @@
   @media (max-width: 667px)
     .banner
       position relative
+      left 0
       padding 0 10px
       box-sizing border-box
       transition all .5s ease

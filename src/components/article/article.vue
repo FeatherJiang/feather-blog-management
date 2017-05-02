@@ -232,5 +232,6 @@
   @media (max-width 667px)
     .article
       position relative
+      left 0
       transition all .5s ease
 </style>

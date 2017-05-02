@@ -195,7 +195,6 @@
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
   .write
-    position relative
     width 100%
     height 100%
     font-size 0
@@ -344,5 +343,6 @@
   @media (max-width 667px)
     .write
       position relative
+      left 0
       transition all .5s ease
 </style>

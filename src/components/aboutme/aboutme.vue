@@ -143,11 +143,9 @@
 </script>
 <style lang="stylus" rel="stylesheet/stylus">
   .aboutme
-    position relative
     width 100%
     height 100%
     font-size 0
-    transition all .5s ease
     .input-wrapper
       position relative
       vertical-align top
@@ -306,4 +304,9 @@
       transition all 0.5s
     .slip-enter, .slip-leave-active
       transform translate(0,-30px)
+  @media (max-width 667px)
+    .aboutme
+      position relative
+      left 0
+      transition all .5s ease
 </style>
