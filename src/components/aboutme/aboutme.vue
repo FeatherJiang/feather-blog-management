@@ -267,12 +267,14 @@
           display none
     .insertpanel-wrapper
       position absolute
+      z-index 99
       top 0
       left 0
       width 100%
       height 100%
     .setpanel-wrapper
       position absolute
+      z-index 99
       top 0
       left 0
       width 100%
@@ -291,7 +293,7 @@
         transform translate(0, -200%)
     .hint
       position absolute
-      z-index 1
+      z-index 10
       top 0
       left 50%
       width 80px
