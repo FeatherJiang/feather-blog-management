@@ -1,7 +1,7 @@
 <template>
   <div class="write" ref="write">
     <div class="input-wrapper">
-      <div id="content" v-model="content"></div>
+      <div id="content"></div>
       <textarea id="media-content" v-model="content" ref="content"></textarea>
       <div id="insert-img-btn" @click="toggleInsertPanel"><i class="fa fa-picture-o"></i></div>
     </div>
@@ -106,6 +106,7 @@
             if (res.code === OK) {
               Vue.toggleSetPanel()
               Vue.content = ''
+              Vue.editor.setValue('')
             }
           })
           .catch(function (error) {
