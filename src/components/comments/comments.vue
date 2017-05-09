@@ -108,6 +108,7 @@
       }
     },
     mounted () {
+      // 删除手势库默认添加的userSelect属性，解决无法选择文本
       delete Hammer.defaults.cssProps.userSelect
       var mc = new Hammer(this.$refs.comments)
 

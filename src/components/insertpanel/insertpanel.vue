@@ -55,6 +55,7 @@
       insertImg () {
         let Vue = this
 
+        // 防止表单重复提交
         if (Vue.cancel !== null) {
           Vue.cancel()
         }

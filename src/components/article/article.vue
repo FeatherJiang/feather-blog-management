@@ -70,10 +70,8 @@
       },
       modifyArticle (article) {
         this.$router.push({path: '/admin/write', query: {id: article.id}})
-        this.$router.push({path: '/admin/write', query: {id: article.id}})
       },
       modifyComment (article) {
-        this.$router.push({path: '/admin/comments', query: {id: article.id}})
         this.$router.push({path: '/admin/comments', query: {id: article.id}})
       },
       deleteArticle (index) {

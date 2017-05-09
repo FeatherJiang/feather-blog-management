@@ -74,6 +74,7 @@
         this.$refs.setForm.reset()
         this.$emit('hideSetPanel', false)
       },
+      // 显示添加图片
       addImg () {
         let resultFile = this.$refs.fileImg.files[0]
         let url = null

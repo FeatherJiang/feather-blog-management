@@ -1,6 +1,13 @@
 # feather-blog-management
 
-> my personal blog management
+> my personal blog management  
+个人博客管理界面
+
+## Technology Stack 技术栈
+
+- vue.js
+- vue-router
+- axios
 
 ## Build Setup
 
@@ -13,9 +20,4 @@ npm run dev
 
 # build for production with minification
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).

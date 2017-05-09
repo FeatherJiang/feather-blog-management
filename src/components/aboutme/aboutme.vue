@@ -51,6 +51,7 @@
       hideInsertPanel (boolean) {
         this.insertPanelShow = boolean
       },
+      // 添加markdown格式图片地址
       insertImg (imgLink) {
         if (window.screen.width < 667) {
           this.content = this.content + '\n' + `![](${imgLink})`
@@ -61,6 +62,7 @@
       update () {
         let Vue = this
 
+        // 防止表单重复提交
         if (Vue.cancel !== null) {
           Vue.cancel()
         }
@@ -115,16 +117,22 @@
     },
     mounted () {
       let Vue = this
+      // ace 编辑器
       this.editor = window.ace.edit('aboutme-content')
       this.editor.setTheme('ace/theme/monokai')
       this.editor.getSession().setMode('ace/mode/markdown')
       this.editor.getSession().on('change', function (e) {
         Vue.content = Vue.editor.getValue()
       })
+
+      // 设置自动换行
       this.editor.setOption('wrap', 'free')
+
+      // 删除手势库默认添加的userSelect属性，解决无法选择文本
       delete Hammer.defaults.cssProps.userSelect
       var mc = new Hammer(this.$refs.content)
 
+      // 左滑动
       mc.on('swipeleft', function (ev) {
         if (window.screen.width < 667) {
           Vue.nav.style.left = '-50px'
@@ -132,6 +140,7 @@
         }
       })
 
+      // 右滑动
       mc.on('swiperight', function (ev) {
         if (window.screen.width < 667) {
           Vue.nav.style.left = '0px'

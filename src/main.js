@@ -7,10 +7,13 @@ import App from './App'
 import router from './router'
 import 'assets/stylus/index.styl'
 
+// es6转换为es5
 es6.polyfill()
 
+// 关闭生产模式下的提示
 Vue.config.productionTip = false
 
+// 使用axios
 Vue.prototype.$http = axios.create({
   baseURL: 'http://www.jiangfeather.com'
 })
