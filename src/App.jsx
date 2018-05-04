@@ -8,7 +8,7 @@ const handlePageChange = () => {
 
 function App() {
   return (
-    <BrowserRouter onUpdate={handlePageChange}>
+    <BrowserRouter onUpdate={handlePageChange} basename="/admin">
       <Route />
     </BrowserRouter>
   );
