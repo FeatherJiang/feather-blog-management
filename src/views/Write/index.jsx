@@ -232,6 +232,9 @@ class Write extends React.Component {
         } else {
           message.success('create success');
         }
+        this.setState({
+          input: '',
+        });
         this.toggleCreateModal();
       }
       this.setState({
