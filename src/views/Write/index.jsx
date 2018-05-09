@@ -25,12 +25,12 @@ const styles = {
     height: '100%',
   },
   view: {
-    position: 'fixed',
+    position: 'relative',
     width: '50%',
     overflow: 'auto',
   },
   uploadButton: {
-    position: 'absolute',
+    position: 'fixed',
     zIndex: '99999',
     top: '10px',
     right: '10px',
