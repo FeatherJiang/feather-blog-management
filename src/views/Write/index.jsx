@@ -30,7 +30,7 @@ const styles = {
     overflow: 'auto',
   },
   uploadButton: {
-    position: 'fixed',
+    position: 'absolute',
     zIndex: '99999',
     top: '10px',
     right: '10px',
