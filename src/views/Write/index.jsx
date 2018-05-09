@@ -25,7 +25,7 @@ const styles = {
     height: '100%',
   },
   view: {
-    position: 'relative',
+    position: 'fixed',
     width: '50%',
     overflow: 'auto',
   },
@@ -36,13 +36,16 @@ const styles = {
     right: '10px',
   },
   modalButton: {
-    position: 'absolute',
+    position: 'fixed',
     zIndex: '99999',
     top: '10px',
     right: '10px',
   },
   img: {
     width: '100px',
+  },
+  uploadImg: {
+    width: '300px',
   },
 };
 
@@ -385,7 +388,11 @@ class Write extends React.Component {
             action={`${config.baseURL}/v1/imgs`}
             onChange={this.uploadImg}
           >
-            {this.state.imageUrl ? <img src={this.state.imageUrl} alt="" /> : uploadButton}
+            {this.state.imageUrl ? (
+              <img src={this.state.imageUrl} style={styles.uploadImg} alt="" />
+            ) : (
+              uploadButton
+            )}
           </Upload>
         </Modal>
         <Modal
@@ -420,7 +427,11 @@ class Write extends React.Component {
                 action={`${config.baseURL}/v1/imgs`}
                 onChange={this.uploadBanner}
               >
-                {this.state.bannerUrl ? <img src={this.state.bannerUrl} alt="" /> : uploadButton}
+                {this.state.bannerUrl ? (
+                  <img src={this.state.bannerUrl} style={styles.uploadImg} alt="" />
+                ) : (
+                  uploadButton
+                )}
               </Upload>
             </FormItem>
             <FormItem label="Type" required>

@@ -28,16 +28,19 @@ const styles = {
     overflow: 'auto',
   },
   uploadButton: {
-    position: 'absolute',
+    position: 'fixed',
     zIndex: '99999',
     top: '10px',
     right: '10px',
   },
   modalButton: {
-    position: 'absolute',
+    position: 'fixed',
     zIndex: '99999',
     top: '10px',
     right: '10px',
+  },
+  uploadImg: {
+    width: '300px',
   },
 };
 
@@ -336,7 +339,11 @@ class Introduce extends React.Component {
               action={`${config.baseURL}/v1/imgs`}
               onChange={this.uploadImg}
             >
-              {this.state.imageUrl ? <img src={this.state.imageUrl} alt="" /> : uploadButton}
+              {this.state.imageUrl ? (
+                <img src={this.state.imageUrl} style={styles.uploadImg} alt="" />
+              ) : (
+                uploadButton
+              )}
             </Upload>
           </Modal>
           <Modal
@@ -370,7 +377,11 @@ class Introduce extends React.Component {
                   action={`${config.baseURL}/v1/imgs`}
                   onChange={this.uploadBanner}
                 >
-                  {this.state.avatar ? <img src={this.state.avatar} alt="" /> : uploadButton}
+                  {this.state.avatar ? (
+                    <img src={this.state.avatar} style={styles.uploadImg} alt="" />
+                  ) : (
+                    uploadButton
+                  )}
                 </Upload>
               </FormItem>
               <FormItem label="Email">
