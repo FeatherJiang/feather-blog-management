@@ -281,6 +281,7 @@ class Articles extends React.Component {
         render: (text, record) => (
           <Button
             type="danger"
+            disabled={!!record.children}
             loading={this.state.delCommentLoading}
             onClick={() => this.delComment(record.cid)}
           >

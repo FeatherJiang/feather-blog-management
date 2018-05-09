@@ -111,7 +111,7 @@ class Introduce extends React.Component {
     }
     if (info.file.status === 'done') {
       this.setState({
-        imageUrl: config.baseURL + info.file.response.data[0].url,
+        imageUrl: `http://www.jiangfeather.com/api${info.file.response.data[0].url}`,
         uploadLoading: false,
       });
       message.success('upload success');
