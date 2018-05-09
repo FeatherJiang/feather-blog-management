@@ -230,11 +230,11 @@ class Write extends React.Component {
         if (this.props.location.state && this.props.location.state.aid) {
           message.success('update success');
         } else {
+          this.setState({
+            input: '',
+          });
           message.success('create success');
         }
-        this.setState({
-          input: '',
-        });
         this.toggleCreateModal();
       }
       this.setState({
