@@ -1,46 +1,46 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Spin, Button, Upload, message, Modal, Icon, Form, Input } from 'antd';
-import AceEditor from 'react-ace';
-import 'brace/mode/markdown';
-import 'brace/theme/monokai';
-import config from '../../config';
-import Markdown from '../../components/Markdown';
-import API from '../../API';
-import { GETED, CREATED } from '../../config/statusCode';
+import React from "react";
+import PropTypes from "prop-types";
+import { Spin, Button, Upload, message, Modal, Icon, Form, Input } from "antd";
+import AceEditor from "react-ace";
+import "brace/mode/markdown";
+import "brace/theme/monokai";
+import config from "../../config";
+import Markdown from "../../components/Markdown";
+import API from "../../API";
+import { GETED, CREATED } from "../../config/statusCode";
 
 const FormItem = Form.Item;
 
 const styles = {
   introduce: {
-    display: 'flex',
-    width: '100%',
-    height: '100vh',
+    display: "flex",
+    width: "100%",
+    height: "100vh",
   },
   editor: {
-    position: 'relative',
-    width: '50%',
-    height: '100%',
+    position: "relative",
+    width: "50%",
+    height: "100%",
   },
   view: {
-    position: 'relative',
-    width: '50%',
-    overflow: 'auto',
+    position: "relative",
+    width: "50%",
+    overflow: "auto",
   },
   uploadButton: {
-    position: 'fixed',
-    zIndex: '99999',
-    top: '10px',
-    right: '10px',
+    position: "fixed",
+    zIndex: "99999",
+    top: "10px",
+    right: "10px",
   },
   modalButton: {
-    position: 'fixed',
-    zIndex: '99999',
-    top: '10px',
-    right: '10px',
+    position: "fixed",
+    zIndex: "99999",
+    top: "10px",
+    right: "10px",
   },
   uploadImg: {
-    width: '300px',
+    width: "300px",
   },
 };
 
@@ -51,12 +51,12 @@ class Introduce extends React.Component {
       loading: false,
       visibleUpload: false,
       visibleUpdate: false,
-      input: '',
-      imageUrl: '',
-      avatar: '',
-      name: '',
-      email: '',
-      url: '',
+      input: "",
+      imageUrl: "",
+      avatar: "",
+      name: "",
+      email: "",
+      url: "",
       uploadLoading: false,
       updateLoading: false,
       uploadBtn: false,
@@ -108,34 +108,34 @@ class Introduce extends React.Component {
     }
   }
   uploadImg(info) {
-    if (info.file.status === 'uploading') {
+    if (info.file.status === "uploading") {
       this.setState({ uploadLoading: true });
       return;
     }
-    if (info.file.status === 'done') {
+    if (info.file.status === "done") {
       this.setState({
         imageUrl: `http://www.jiangfeather.com/api${info.file.response.data[0].url}`,
         uploadLoading: false,
       });
-      message.success('upload success');
+      message.success("upload success");
     }
-    if (info.file.status === 'error') {
+    if (info.file.status === "error") {
       message.error(`${info.file.name} file upload failed.`);
     }
   }
   uploadBanner(info) {
-    if (info.file.status === 'uploading') {
+    if (info.file.status === "uploading") {
       this.setState({ uploadLoading: true });
       return;
     }
-    if (info.file.status === 'done') {
+    if (info.file.status === "done") {
       this.setState({
         avatar: config.baseURL + info.file.response.data[0].url,
         uploadLoading: false,
       });
-      message.success('upload success');
+      message.success("upload success");
     }
-    if (info.file.status === 'error') {
+    if (info.file.status === "error") {
       message.error(`${info.file.name} file upload failed.`);
     }
   }
@@ -162,10 +162,10 @@ class Introduce extends React.Component {
     try {
       const data = {
         introduce: this.state.input,
-        avatar: this.state.avatar.replace(config.baseURL, ''),
+        avatar: this.state.avatar.replace(config.baseURL, ""),
       };
       Object.keys(values).forEach((item) => {
-        if (values[item] !== undefined) {
+        if (values[item]) {
           data[item] = values[item];
         }
       });
@@ -178,7 +178,7 @@ class Introduce extends React.Component {
           url: result.data[0].url,
           input: result.data[0].introduce,
         });
-        message.success('update success');
+        message.success("update success");
         this.toggleUpdateModal();
       }
       this.setState({
@@ -196,7 +196,7 @@ class Introduce extends React.Component {
       const { visibleUpload } = preState;
       return {
         visibleUpload: !visibleUpload,
-        imageUrl: '',
+        imageUrl: "",
       };
     });
   }
@@ -212,7 +212,7 @@ class Introduce extends React.Component {
   render() {
     const uploadButton = (
       <div>
-        <Icon type={this.state.uploadLoading ? 'loading' : 'plus'} />
+        <Icon type={this.state.uploadLoading ? "loading" : "plus"} />
         <div className="ant-upload-text">Upload</div>
       </div>
     );
@@ -333,14 +333,18 @@ class Introduce extends React.Component {
               listType="picture-card"
               className="avatar-uploader"
               headers={{
-                'X-Requested-With': null,
+                "X-Requested-With": null,
               }}
               showUploadList={false}
               action={`${config.baseURL}/v1/imgs`}
               onChange={this.uploadImg}
             >
               {this.state.imageUrl ? (
-                <img src={this.state.imageUrl} style={styles.uploadImg} alt="" />
+                <img
+                  src={this.state.imageUrl}
+                  style={styles.uploadImg}
+                  alt=""
+                />
               ) : (
                 uploadButton
               )}
@@ -355,14 +359,16 @@ class Introduce extends React.Component {
           >
             <Form className="form">
               <FormItem label="Name">
-                {getFieldDecorator('name', {
+                {getFieldDecorator("name", {
                   initialValue: this.state.name,
-                  rules: [{ required: false, message: 'Please input name!' }],
+                  rules: [{ required: false, message: "Please input name!" }],
                 })(<Input placeholder="Name" />)}
               </FormItem>
               <FormItem label="Password">
-                {getFieldDecorator('password', {
-                  rules: [{ required: false, message: 'Please input password!' }],
+                {getFieldDecorator("password", {
+                  rules: [
+                    { required: false, message: "Please input password!" },
+                  ],
                 })(<Input placeholder="Password" type="password" />)}
               </FormItem>
               <FormItem label="Avatar" required={false}>
@@ -371,29 +377,33 @@ class Introduce extends React.Component {
                   listType="picture-card"
                   className="banner-uploader"
                   headers={{
-                    'X-Requested-With': null,
+                    "X-Requested-With": null,
                   }}
                   showUploadList={false}
                   action={`${config.baseURL}/v1/imgs`}
                   onChange={this.uploadBanner}
                 >
                   {this.state.avatar ? (
-                    <img src={this.state.avatar} style={styles.uploadImg} alt="" />
+                    <img
+                      src={this.state.avatar}
+                      style={styles.uploadImg}
+                      alt=""
+                    />
                   ) : (
                     uploadButton
                   )}
                 </Upload>
               </FormItem>
               <FormItem label="Email">
-                {getFieldDecorator('email', {
+                {getFieldDecorator("email", {
                   initialValue: this.state.email,
-                  rules: [{ required: false, message: 'Please input email!' }],
+                  rules: [{ required: false, message: "Please input email!" }],
                 })(<Input placeholder="Email" />)}
               </FormItem>
               <FormItem label="Url">
-                {getFieldDecorator('url', {
+                {getFieldDecorator("url", {
                   initialValue: this.state.url,
-                  rules: [{ required: false, message: 'Please input url!' }],
+                  rules: [{ required: false, message: "Please input url!" }],
                 })(<Input placeholder="Url" />)}
               </FormItem>
             </Form>
